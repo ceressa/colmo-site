@@ -4,8 +4,8 @@
 # yetkili satici listesi decimo.dozi.app ile ayni. Magaza kaydindaki web
 # sitesi alani colmo.dozi.app oldugu icin dogrulama bu dosyadan yapiliyor.
 #
-# Reklam lansmanda KAPALI. Dosya simdiden duruyor cunku AdMob dogrulamasi
-# gun aliyor; acildiginda beklenmesin.
+# Reklam ACIK (2026-08-26). Android app id ...~4254427973,
+# iOS ...~3512191947; ikisi de bu yayincinin altinda.
 #
 google.com, pub-1767292468741192, DIRECT, f08
 c47fec0942fa0

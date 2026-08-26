@@ -45,20 +45,28 @@ PRIVACY_EN = (
         "level was started, won, lost or left, how many doses it took, which "
         "helper was used, whether a language was changed. This exists to "
         "answer one question: where the game is too hard or unclear. "
-        "Advertising identifiers, ad personalisation and ad-related data are "
-        "switched off in code.",
+        "Firebase's ad signals are switched off in code, so this measurement "
+        "never feeds an advertising profile.",
+        "<strong>Ads</strong> (Google AdMob): from level 11 onwards the game "
+        "shows an occasional full-screen ad between levels, never after a "
+        "loss. There is also an ad you may choose to watch to earn one life; "
+        "it is always optional and nothing is taken if you skip it. To select "
+        "and measure ads, Google receives the device's advertising ID and "
+        "standard request data (approximate region, device type). In the EEA, "
+        "the UK and Switzerland you are asked for consent before any of this "
+        "happens, and your answer is stored on the device.",
         "<strong>Crash reports</strong> (Firebase Crashlytics): if the game "
         "crashes, the technical details of the crash are sent (device model, "
         "OS version, the point in the code that failed). A game that crashes "
         "silently is a game nobody reports.")
     + "<h2>3. What we do not do</h2>"
-    + _ul("No ads are shown at launch. The advertising library ships "
-          "inside the app but is never started, so it collects nothing "
-          "and requests nothing.",
-          "No advertising ID, no ad personalisation, no tracking across apps "
-          "or sites.",
+    + _ul("No banner ads, no ad on the loss screen, and no ad before "
+          "level 11.",
+          "No account, no name and no e-mail is ever sent to the ad network.",
           "No location, no contacts, no photos, no microphone.",
-          "No selling or sharing of data with third parties.")
+          "We do not sell your data. The only third party that receives "
+          "anything is Google, and only what serving and measuring an ad "
+          "requires.")
     + "<h2>4. Where the data lives</h2>"
     + _p("Cloud saves are stored in Google Firebase (Firestore) in the "
          "project <strong>colmo-bardino</strong>. Access rules restrict every "
@@ -68,10 +76,12 @@ PRIVACY_EN = (
     + _p("Uninstalling the app removes local data. To delete a cloud save, "
          "see <a href=\"/account-deletion.html\">Account deletion</a>.")
     + "<h2>6. Children</h2>"
-    + _p("Colmo contains no chat, no user-generated content and no ads. It "
-         "does not knowingly collect personal data from children; the only "
-         "optional personal datum in the product is the Google e-mail used "
-         "for sign-in.")
+    + _p("Colmo contains no chat and no user-generated content. It is not "
+         "directed at children and does not knowingly collect personal data "
+         "from them; the only optional personal datum in the product is the "
+         "Google e-mail used for sign-in. The game does show ads, so it is "
+         "rated for a general audience rather than declared a children's "
+         "app.")
     + "<h2>7. Changes</h2>"
     + _p("Material changes to this policy will be reflected here with a new "
          "date.")
@@ -102,20 +112,27 @@ PRIVACY_TR = (
         "başlatıldı, kazanıldı, kaybedildi ya da bırakıldı; kaç doz "
         "harcandı; hangi joker kullanıldı; dil değiştirildi mi. Tek bir "
         "soruya cevap vermek için var: oyun nerede fazla zor ya da "
-        "anlaşılmaz. Reklam kimliği, reklam kişiselleştirmesi ve reklamla "
-        "ilgili veri kod içinde kapatılmıştır.",
+        "anlaşılmaz. Firebase'in reklam sinyalleri kod içinde kapalıdır; "
+        "yani bu ölçüm hiçbir zaman bir reklam profiline dönüşmez.",
+        "<strong>Reklamlar</strong> (Google AdMob): 11. bölümden itibaren "
+        "bölüm aralarında ara sıra tam ekran reklam gösterilir; kaybettikten "
+        "sonra asla gösterilmez. Ayrıca izlemeyi kendin seçersen bir can "
+        "kazandıran bir reklam vardır; izlemezsen hiçbir şey eksilmez. "
+        "Reklamı seçmek ve ölçmek için Google, cihazın reklam kimliğini ve "
+        "standart istek verisini (yaklaşık bölge, cihaz tipi) alır. AEA, "
+        "Birleşik Krallık ve İsviçre'de bunların hiçbiri olmadan önce sana "
+        "rıza sorulur ve cevabın cihazda saklanır.",
         "<strong>Çökme raporları</strong> (Firebase Crashlytics): oyun "
         "çökerse çökmenin teknik ayrıntısı gönderilir (cihaz modeli, işletim "
         "sistemi sürümü, kodun hangi noktada hata verdiği). Sessizce çöken "
         "bir oyunu kimse bildirmez.")
     + "<h2>3. Yapmadıklarımız</h2>"
-    + _ul("Lansmanda reklam gösterilmiyor. Reklam kütüphanesi uygulamanın "
-          "içinde yer alıyor ama hiç başlatılmıyor; hiçbir şey toplamıyor "
-          "ve hiçbir istek yapmıyor.",
-          "Reklam kimliği, reklam kişiselleştirmesi, uygulamalar arası takip "
-          "yok.",
+    + _ul("Banner reklam yok, kayıp ekranında reklam yok, 11. bölümden "
+          "önce reklam yok.",
+          "Reklam ağına hesap, isim veya e-posta gönderilmez.",
           "Konum, rehber, fotoğraf, mikrofon yok.",
-          "Üçüncü taraflara veri satışı veya paylaşımı yok.")
+          "Veri satmıyoruz. Bir şey alan tek üçüncü taraf Google ve yalnızca "
+          "bir reklamı göstermek ile ölçmek için gerekeni alıyor.")
     + "<h2>4. Verinin yaşadığı yer</h2>"
     + _p("Bulut kayıtları Google Firebase (Firestore) üzerinde "
          "<strong>colmo-bardino</strong> projesinde tutulur. Erişim "
@@ -127,9 +144,12 @@ PRIVACY_TR = (
          "için <a href=\"/tr/account-deletion.html\">Hesap silme</a> "
          "sayfasına bak.")
     + "<h2>6. Çocuklar</h2>"
-    + _p("Colmo'da sohbet, kullanıcı içeriği ve reklam yoktur. Çocuklardan "
-         "bilerek kişisel veri toplanmaz; üründeki tek isteğe bağlı kişisel "
-         "veri, girişte kullanılan Google e-postasıdır.")
+    + _p("Colmo'da sohbet ve kullanıcı içeriği yoktur. Uygulama çocuklara "
+         "yönelik değildir ve çocuklardan bilerek kişisel veri toplamaz; "
+         "üründeki tek isteğe bağlı kişisel veri, girişte kullanılan Google "
+         "e-postasıdır. Oyunda reklam gösterildiği için genel kitleye uygun "
+         "olarak derecelendirilmiştir, çocuk uygulaması olarak beyan "
+         "edilmemiştir.")
     + "<h2>7. Değişiklikler</h2>"
     + _p("Bu politikadaki önemli değişiklikler yeni bir tarihle burada "
          "yayımlanır.")
