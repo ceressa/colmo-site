@@ -1,0 +1,185 @@
+/* Colmo - colmo.dozi.app
+ *
+ * Palet oyunun kendisinden alindi (lib/theme.dart), siteye ozel renk
+ * uydurulmadi. Decimo sitesindeki kural burada da gecerli: siteyi gorup
+ * uygulamayi acan kisi ayni urune bakmali.
+ *
+ * Bir kural daha oyundan devralindi ve bu siteyi Decimo'nunkinden ayiran sey
+ * o: COLMO'da derinlik KATI bir ofset kabartmadir, bulanik golge degil.
+ * theme.dart'in basinda aynen boyle yaziyor ("a blur is a bug"). Sitede de
+ * hicbir yerde blur yok; her kabartma tam piksel, tam renk.
+ */
+
+:root {
+  --zemin:   #FFF4FB;
+  --duvar:   #FBE6F2;
+  --beyaz:   #FFFFFF;
+  --pembe:   #FF5BA3;
+  --pembe-d: #E03D84;
+  --turkuaz: #14C8C8;
+  --turkuaz-d: #0FA3A3;
+  --sari:    #FFC83D;
+  --sari-d:  #F0A800;
+  --mor:     #9B5DE5;
+  --lacivert:#1B2F4A;
+  --ink:     #3A2A4D;
+  --soluk:   #756B8E;
+  --raf:     #FFE0A8;
+  --raf-k:   #F2C05A;
+  --r:       18px;
+  --r-s:     12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Genislik ezilirken yukseklik oznitelikte kalirsa 1422 piksellik bir satir
+   aciliyor ve metin ekranin altina dusuyor. height:auto sart. */
+img { max-width: 100%; height: auto; display: block; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--zemin);
+  color: var(--ink);
+  font-family: Nunito, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kap { width: min(1120px, 92vw); margin: 0 auto; }
+
+a { color: var(--pembe-d); }
+
+/* ── Ust bar ─────────────────────────────────────────────────────────── */
+.ust {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 244, 251, .92);
+  border-bottom: 3px solid var(--lacivert);
+}
+.ust .kap { display: flex; align-items: center; gap: 14px; padding: 11px 0; }
+.marka { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--lacivert); }
+.marka img {
+  width: 40px; height: 40px; border-radius: 11px;
+  border: 3px solid var(--lacivert);
+  box-shadow: 3px 3px 0 var(--lacivert);
+}
+.marka b { font-size: 21px; font-weight: 900; letter-spacing: .01em; }
+
+/* Dil secici: bayrak yok. Bayrak dili degil ulkeyi gosterir ve altisi da
+   birden cok ulkede konusuluyor. */
+.diller { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.diller a {
+  display: inline-block; padding: 4px 9px; border-radius: var(--r-s);
+  font-size: 13px; font-weight: 800; text-decoration: none;
+  color: var(--soluk); border: 2px solid transparent;
+}
+.diller a:hover { color: var(--lacivert); border-color: var(--duvar); }
+.diller a[aria-current="page"] {
+  color: var(--lacivert); background: var(--beyaz);
+  border-color: var(--lacivert); box-shadow: 2px 2px 0 var(--lacivert);
+}
+
+/* ── Kahraman ────────────────────────────────────────────────────────── */
+.kahraman { padding: 58px 0 44px; }
+.kahraman .kap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: center; }
+@media (max-width: 860px) {
+  .kahraman { padding: 36px 0 30px; }
+  .kahraman .kap { grid-template-columns: 1fr; gap: 30px; }
+}
+
+.rozet {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--sari); color: var(--lacivert);
+  border: 3px solid var(--lacivert); border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--lacivert);
+  padding: 6px 15px; font-weight: 900; font-size: 14px; letter-spacing: .02em;
+}
+.rozet::before {
+  content: ""; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--lacivert);
+}
+
+.kahraman h1 {
+  margin: 18px 0 14px;
+  font-size: clamp(34px, 5.6vw, 54px); line-height: 1.08;
+  font-weight: 900; letter-spacing: -.02em; color: var(--lacivert);
+}
+.kahraman h1 em { font-style: normal; color: var(--pembe); }
+.alt { font-size: 18px; color: var(--soluk); max-width: 46ch; }
+.kucuk { margin-top: 14px; font-size: 14px; color: var(--soluk); font-weight: 700; }
+
+.telefon img {
+  width: min(300px, 76vw); margin: 0 auto;
+  border-radius: 22px; border: 4px solid var(--lacivert);
+  box-shadow: 8px 8px 0 var(--lacivert);
+}
+
+/* ── Bolumler ───────────────────────────────────────────────────────── */
+section { padding: 54px 0; }
+.duvar-bolum { background: var(--duvar); border-top: 3px solid var(--lacivert); border-bottom: 3px solid var(--lacivert); }
+h2 {
+  font-size: clamp(25px, 3.4vw, 34px); font-weight: 900;
+  color: var(--lacivert); letter-spacing: -.01em; text-align: center;
+}
+.bolum-alt { text-align: center; color: var(--soluk); margin: 10px auto 30px; max-width: 62ch; }
+
+.adimlar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.ozellikler { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+@media (max-width: 900px) { .adimlar { grid-template-columns: 1fr; } .ozellikler { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .ozellikler { grid-template-columns: 1fr; } }
+
+.adim, .ozellik {
+  background: var(--beyaz); border: 3px solid var(--lacivert);
+  border-radius: var(--r); padding: 22px 20px;
+  box-shadow: 5px 5px 0 var(--lacivert);
+}
+.adim h3, .ozellik h3 { font-size: 18px; font-weight: 900; color: var(--lacivert); margin-bottom: 6px; }
+.adim p, .ozellik p { color: var(--soluk); font-size: 15.5px; }
+
+/* Kavanoz: kuralin kendisini gosteriyor. Sayi kabin istedigi, dolgu icine
+   giren. Ucuncusu tasiyor, o yuzden reddediliyor. */
+.kavanozlar { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 16px; }
+.kvz { width: 54px; text-align: center; }
+.kvz .cam {
+  height: 64px; border: 3px solid var(--lacivert); border-radius: 6px 6px 13px 13px;
+  background: var(--beyaz); position: relative; overflow: hidden;
+}
+.kvz .cam i { position: absolute; left: 0; right: 0; bottom: 0; display: block; background: var(--pembe); }
+.kvz.tam .cam i { background: var(--turkuaz); }
+.kvz .kaide {
+  height: 11px; margin-top: 3px; border: 3px solid var(--lacivert);
+  border-radius: 999px; background: var(--beyaz);
+  font-size: 0;
+}
+.kvz.hedef .kaide { background: var(--sari); }
+.kvz b { display: block; font-size: 15px; font-weight: 900; color: var(--lacivert); margin-top: 5px; }
+
+.sayi { font-size: 34px; font-weight: 900; color: var(--pembe); line-height: 1; margin-bottom: 8px; }
+
+/* ── Vitrin ─────────────────────────────────────────────────────────── */
+.vitrin { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 900px) { .vitrin { grid-template-columns: repeat(2, 1fr); } }
+.vitrin figure { text-align: center; }
+.vitrin img {
+  border-radius: 16px; border: 3px solid var(--lacivert);
+  box-shadow: 5px 5px 0 var(--lacivert);
+}
+.vitrin figcaption { margin-top: 10px; font-size: 14px; color: var(--soluk); font-weight: 700; }
+
+/* ── Kapanis ────────────────────────────────────────────────────────── */
+.kapanis { text-align: center; }
+.kapanis .kutu {
+  background: var(--beyaz); border: 4px solid var(--lacivert);
+  border-radius: 24px; box-shadow: 8px 8px 0 var(--lacivert);
+  padding: 38px 26px; max-width: 720px; margin: 0 auto;
+}
+
+/* ── Altbilgi ───────────────────────────────────────────────────────── */
+footer { border-top: 3px solid var(--lacivert); background: var(--duvar); padding: 26px 0 30px; }
+footer .kap { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
+footer span { color: var(--soluk); font-size: 15px; }
+.f-baglantilar { display: flex; gap: 18px; flex-wrap: wrap; }
+.f-baglantilar a { color: var(--lacivert); font-weight: 800; font-size: 15px; text-decoration: none; }
+.f-baglantilar a:hover { color: var(--pembe); text-decoration: underline; }
+.f-alt { margin-top: 14px; color: var(--soluk); font-size: 13.5px; justify-content: flex-start; }

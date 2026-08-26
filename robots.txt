@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://colmo.dozi.app/sitemap.xml
