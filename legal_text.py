@@ -52,7 +52,9 @@ PRIVACY_EN = (
         "OS version, the point in the code that failed). A game that crashes "
         "silently is a game nobody reports.")
     + "<h2>3. What we do not do</h2>"
-    + _ul("No ads and no advertising SDKs at launch.",
+    + _ul("No ads are shown at launch. The advertising library ships "
+          "inside the app but is never started, so it collects nothing "
+          "and requests nothing.",
           "No advertising ID, no ad personalisation, no tracking across apps "
           "or sites.",
           "No location, no contacts, no photos, no microphone.",
@@ -107,7 +109,9 @@ PRIVACY_TR = (
         "sistemi sürümü, kodun hangi noktada hata verdiği). Sessizce çöken "
         "bir oyunu kimse bildirmez.")
     + "<h2>3. Yapmadıklarımız</h2>"
-    + _ul("Lansmanda reklam ve reklam SDK'sı yok.",
+    + _ul("Lansmanda reklam gösterilmiyor. Reklam kütüphanesi uygulamanın "
+          "içinde yer alıyor ama hiç başlatılmıyor; hiçbir şey toplamıyor "
+          "ve hiçbir istek yapmıyor.",
           "Reklam kimliği, reklam kişiselleştirmesi, uygulamalar arası takip "
           "yok.",
           "Konum, rehber, fotoğraf, mikrofon yok.",
