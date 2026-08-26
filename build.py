@@ -38,55 +38,21 @@ LEGAL_LANGS = {"en", "tr"}
 T = {}
 
 T["en"] = {
-    "title": "Colmo - Fill every jar to exactly its number",
-    "desc": "A calm number puzzle. Every jar wants an exact amount: never "
-            "short, never over. 60 levels plus endless. Coming soon to "
-            "Android and iOS.",
+    "title": "Colmo - Fill every jar to the brim",
+    "desc": "A calm number puzzle set in a room full of glass jars. Coming "
+            "soon to Android and iOS.",
     "badge": "Coming soon",
-    "h1a": "Every jar wants",
-    "h1b": "an exact amount.",
-    "lead": "Doses arrive one at a time. A jar that reaches its number "
-            "exactly bursts and is shelved. Short is fine, over is refused. "
-            "The rule takes one move to learn and sixty levels to finish.",
-    "small": "Free. Plays offline. No ads at launch.",
-    "howT": "One rule, no tutorial",
-    "howS": "Nothing is explained in words. The board is built so the rule "
-            "explains itself on the first move.",
-    "steps": [
-        ("Fill to the number",
-         "The number on the jar is what it wants in total. Reach it exactly "
-         "and the jar bursts. Two doses, three, it does not matter how you "
-         "get there."),
-        ("Over is refused, free",
-         "A dose that would overshoot never lands. Nothing is spent and "
-         "nothing is lost; the jar simply shows you what would not fit."),
-        ("Some jars have a temper",
-         "A narrow neck takes only small doses and stamps its limit above "
-         "its mouth. A waxed jar takes nothing at all until the jar beside "
-         "it bursts."),
-    ],
-    "inT": "What is in it",
-    "inS": "No energy timer, no lives, no waiting. You can finish it without "
-           "paying anything, because there is nothing to pay for.",
-    "feats": [
-        ("60", "Hand built levels",
-         "Not generated and shipped. Every board is solved by a reference "
-         "bot before it ships, and its budget comes from that solution."),
-        ("8", "Levels that teach",
-         "The first eight introduce one idea each, with no text at all. "
-         "The form of the board does the teaching."),
-        ("6", "Languages",
-         "English, Turkish, German, French, Spanish, Portuguese. The board "
-         "itself is wordless, so nothing gets lost."),
-        ("0", "Ads at launch",
-         "No banners, no forced videos, no energy you have to wait for."),
-    ],
+    "h1a": "A quiet room,",
+    "h1b": "a wall of jars.",
+    "lead": "Colmo is a number puzzle you can play with one hand and no "
+            "hurry. Jars, shelves, hundreds of levels, and the small "
+            "satisfaction of one landing exactly right.",
+    "small": "Free. Plays offline.",
+    "bandAlt": "Colmo jars on a shelf",
     "shotsT": "From the game",
     "shotsS": "Real screenshots, not mock-ups.",
-    "caps": ["A narrow neck stamps its limit",
-             "A waxed jar opens when its neighbour bursts",
-             "Stars come from what you did not spend",
-             "The shelf wall you climb"],
+    "caps": ["The board", "Every jar has its own character",
+             "The end of a level", "The shelf wall you climb"],
     "endT": "Not out yet.",
     "endS": "Colmo is in final testing on Android, with iOS to follow. This "
             "page will carry the store links the day it is out.",
@@ -96,54 +62,21 @@ T["en"] = {
 }
 
 T["tr"] = {
-    "title": "Colmo - Her kavanozu tam sayısına kadar doldur",
-    "desc": "Sakin bir sayı bulmacası. Her kavanoz tam bir miktar istiyor: "
-            "eksik olur, fazla olmaz. 60 bölüm ve sonsuz mod. Android ve "
-            "iOS'ta çok yakında.",
+    "title": "Colmo - Kavanozları ağzına kadar doldur",
+    "desc": "Cam kavanozlarla dolu bir odada geçen sakin bir sayı bulmacası. "
+            "Android ve iOS'ta çok yakında.",
     "badge": "Çok yakında",
-    "h1a": "Her kavanoz",
-    "h1b": "tam bir miktar istiyor.",
-    "lead": "Dozlar tek tek geliyor. Sayısına tam ulaşan kavanoz patlıyor ve "
-            "rafa kalkıyor. Eksik kalmak serbest, taşmak reddediliyor. Kural "
-            "bir hamlede öğreniliyor, altmış bölümde bitiyor.",
-    "small": "Ücretsiz. İnternetsiz oynanır. Lansmanda reklam yok.",
-    "howT": "Tek kural, sıfır eğitim",
-    "howS": "Hiçbir şey yazıyla anlatılmıyor. Tahta, kuralı ilk hamlede kendi "
-            "anlatacak şekilde kuruldu.",
-    "steps": [
-        ("Sayısına kadar doldur",
-         "Kavanozun üzerindeki sayı toplamda ne istediği. Tam o sayıya "
-         "ulaşınca kavanoz patlıyor. İki dozla mı üç dozla mı, fark etmiyor."),
-        ("Taşan doz bedava reddedilir",
-         "Taşıracak bir doz hiç yerleşmiyor. Ne harcanıyor ne kaybediliyor; "
-         "kavanoz sadece neyin sığmayacağını gösteriyor."),
-        ("Bazı kavanozların huyu var",
-         "Dar boyunlu olan yalnızca küçük dozları alıyor ve sınırını ağzının "
-         "üstüne damgalıyor. Mühürlü olan, yanındaki kavanoz patlayana kadar "
-         "hiçbir şey almıyor."),
-    ],
-    "inT": "İçinde neler var",
-    "inS": "Enerji sayacı yok, can yok, bekleme yok. Hiçbir şey ödemeden "
-           "sonuna kadar gidiyorsun, çünkü ödenecek bir şey yok.",
-    "feats": [
-        ("60", "Elle kurulmuş bölüm",
-         "Üretilip bırakılmadı. Her tahta yayına girmeden önce referans bir "
-         "çözücüyle çözülüyor ve bütçesi o çözümden geliyor."),
-        ("8", "Öğreten bölüm",
-         "İlk sekizi tek tek birer fikir tanıtıyor, hem de hiç yazı "
-         "kullanmadan. Öğreten şey tahtanın biçimi."),
-        ("6", "Dil",
-         "İngilizce, Türkçe, Almanca, Fransızca, İspanyolca, Portekizce. "
-         "Tahta zaten dilsiz, o yüzden hiçbir şey kaybolmuyor."),
-        ("0", "Lansmanda reklam",
-         "Banner yok, zorunlu video yok, beklemen gereken enerji yok."),
-    ],
+    "h1a": "Sessiz bir oda,",
+    "h1b": "bir duvar dolusu kavanoz.",
+    "lead": "Colmo, tek elle ve acele etmeden oynanan bir sayı bulmacası. "
+            "Kavanozlar, raflar, yüzlerce bölüm ve bir tanesinin tam yerine "
+            "oturmasının o küçük tatmini.",
+    "small": "Ücretsiz. İnternetsiz oynanır.",
+    "bandAlt": "Rafta duran Colmo kavanozları",
     "shotsT": "Oyundan kareler",
     "shotsS": "Hepsi gerçek ekran görüntüsü, temsili değil.",
-    "caps": ["Dar boyun sınırını damgalıyor",
-             "Mühür, komşusu patlayınca açılıyor",
-             "Yıldız harcamadığından geliyor",
-             "Tırmandığın raf duvarı"],
+    "caps": ["Tahta", "Her kavanozun kendi huyu var",
+             "Bölümün sonu", "Tırmandığın raf duvarı"],
     "endT": "Henüz çıkmadı.",
     "endS": "Colmo Android'de son testlerinde, ardından iOS geliyor. Çıktığı "
             "gün mağaza bağlantıları bu sayfada olacak.",
@@ -153,54 +86,21 @@ T["tr"] = {
 }
 
 T["de"] = {
-    "title": "Colmo - Fülle jedes Glas exakt bis zu seiner Zahl",
-    "desc": "Ein ruhiges Zahlenpuzzle. Jedes Glas will eine exakte Menge: "
-            "nie zu wenig, nie zu viel. 60 Level und Endlosmodus. Bald für "
+    "title": "Colmo - Fülle die Gläser bis zum Rand",
+    "desc": "Ein ruhiges Zahlenpuzzle in einem Raum voller Gläser. Bald für "
             "Android und iOS.",
     "badge": "Bald verfügbar",
-    "h1a": "Jedes Glas will",
-    "h1b": "eine exakte Menge.",
-    "lead": "Die Dosen kommen einzeln. Ein Glas, das seine Zahl genau "
-            "erreicht, platzt und kommt ins Regal. Zu wenig ist erlaubt, zu "
-            "viel wird abgelehnt. Die Regel lernt man in einem Zug.",
-    "small": "Kostenlos. Auch offline spielbar. Zum Start ohne Werbung.",
-    "howT": "Eine Regel, kein Tutorial",
-    "howS": "Nichts wird in Worten erklärt. Das Brett ist so gebaut, dass die "
-            "Regel sich im ersten Zug selbst erklärt.",
-    "steps": [
-        ("Bis zur Zahl füllen",
-         "Die Zahl auf dem Glas ist, was es insgesamt will. Genau treffen, "
-         "und das Glas platzt. Ob mit zwei oder drei Dosen, ist egal."),
-        ("Zu viel wird gratis abgelehnt",
-         "Eine Dose, die überlaufen würde, landet gar nicht erst. Nichts wird "
-         "verbraucht und nichts geht verloren."),
-        ("Manche Gläser haben Eigenheiten",
-         "Ein enger Hals nimmt nur kleine Dosen und zeigt seine Grenze über "
-         "der Öffnung. Ein versiegeltes Glas nimmt gar nichts, bis das Glas "
-         "daneben platzt."),
-    ],
-    "inT": "Was drin ist",
-    "inS": "Keine Energieanzeige, keine Leben, kein Warten. Du kommst bis zum "
-           "Ende, ohne etwas zu bezahlen.",
-    "feats": [
-        ("60", "Handgebaute Level",
-         "Nicht einfach generiert. Jedes Brett wird vor der Auslieferung von "
-         "einem Referenzlöser gelöst."),
-        ("8", "Level, die lehren",
-         "Die ersten acht führen je eine Idee ein, ganz ohne Text. Es lehrt "
-         "die Form des Bretts."),
-        ("6", "Sprachen",
-         "Englisch, Türkisch, Deutsch, Französisch, Spanisch, "
-         "Portugiesisch. Das Brett selbst ist wortlos."),
-        ("0", "Werbung zum Start",
-         "Keine Banner, keine Pflichtvideos, keine Energie zum Abwarten."),
-    ],
+    "h1a": "Ein stiller Raum,",
+    "h1b": "eine Wand voller Gläser.",
+    "lead": "Colmo ist ein Zahlenpuzzle für eine Hand und ohne Eile. Gläser, "
+            "Regale, hunderte Level und die kleine Zufriedenheit, wenn "
+            "eines genau passt.",
+    "small": "Kostenlos. Auch offline spielbar.",
+    "bandAlt": "Colmo-Gläser auf einem Regal",
     "shotsT": "Aus dem Spiel",
     "shotsS": "Echte Screenshots, keine Montagen.",
-    "caps": ["Ein enger Hals zeigt seine Grenze",
-             "Das Siegel öffnet sich beim Nachbarn",
-             "Sterne kommen vom Nichtverbrauchen",
-             "Die Regalwand, die du hochsteigst"],
+    "caps": ["Das Brett", "Jedes Glas hat seinen eigenen Charakter",
+             "Das Ende eines Levels", "Die Regalwand, die du hochsteigst"],
     "endT": "Noch nicht erschienen.",
     "endS": "Colmo ist auf Android im letzten Test, iOS folgt. Am Tag der "
             "Veröffentlichung stehen die Store-Links hier.",
@@ -210,54 +110,21 @@ T["de"] = {
 }
 
 T["fr"] = {
-    "title": "Colmo - Remplis chaque bocal exactement à son nombre",
-    "desc": "Un puzzle de nombres apaisant. Chaque bocal veut une quantité "
-            "exacte : jamais trop peu, jamais trop. 60 niveaux et un mode "
-            "infini. Bientôt sur Android et iOS.",
+    "title": "Colmo - Remplis les bocaux à ras bord",
+    "desc": "Un puzzle de nombres apaisant dans une pièce pleine de bocaux "
+            "en verre. Bientôt sur Android et iOS.",
     "badge": "Bientôt disponible",
-    "h1a": "Chaque bocal veut",
-    "h1b": "une quantité exacte.",
-    "lead": "Les doses arrivent une par une. Un bocal qui atteint son nombre "
-            "exactement éclate et rejoint l'étagère. En dessous, c'est "
-            "permis ; au dessus, c'est refusé.",
-    "small": "Gratuit. Jouable hors ligne. Sans publicité au lancement.",
-    "howT": "Une règle, aucun tutoriel",
-    "howS": "Rien n'est expliqué avec des mots. Le plateau est construit pour "
-            "que la règle s'explique au premier coup.",
-    "steps": [
-        ("Remplir jusqu'au nombre",
-         "Le nombre sur le bocal est ce qu'il veut au total. Atteins-le "
-         "exactement et le bocal éclate. Deux doses ou trois, peu importe."),
-        ("Le trop-plein est refusé, gratuitement",
-         "Une dose qui déborderait ne se pose jamais. Rien n'est dépensé et "
-         "rien n'est perdu."),
-        ("Certains bocaux ont un caractère",
-         "Un col étroit n'accepte que de petites doses et affiche sa limite "
-         "au-dessus de son ouverture. Un bocal scellé n'accepte rien tant que "
-         "son voisin n'a pas éclaté."),
-    ],
-    "inT": "Ce qu'il contient",
-    "inS": "Pas de jauge d'énergie, pas de vies, pas d'attente. Tu vas "
-           "jusqu'au bout sans rien payer.",
-    "feats": [
-        ("60", "Niveaux construits à la main",
-         "Pas simplement générés. Chaque plateau est résolu par un solveur de "
-         "référence avant publication."),
-        ("8", "Niveaux qui enseignent",
-         "Les huit premiers introduisent une idée chacun, sans aucun texte."),
-        ("6", "Langues",
-         "Anglais, turc, allemand, français, espagnol, portugais. Le plateau "
-         "lui-même est sans mots."),
-        ("0", "Publicité au lancement",
-         "Pas de bannière, pas de vidéo obligatoire, pas d'énergie à "
-         "attendre."),
-    ],
+    "h1a": "Une pièce calme,",
+    "h1b": "un mur de bocaux.",
+    "lead": "Colmo est un puzzle de nombres qui se joue d'une main et sans "
+            "se presser. Des bocaux, des étagères, des centaines de niveaux, "
+            "et la petite satisfaction d'en voir un tomber juste.",
+    "small": "Gratuit. Jouable hors ligne.",
+    "bandAlt": "Bocaux Colmo sur une étagère",
     "shotsT": "Images du jeu",
     "shotsS": "De vraies captures, pas des maquettes.",
-    "caps": ["Un col étroit affiche sa limite",
-             "Le sceau s'ouvre quand le voisin éclate",
-             "Les étoiles viennent du non-dépensé",
-             "Le mur d'étagères que tu grimpes"],
+    "caps": ["Le plateau", "Chaque bocal a son caractère",
+             "La fin d'un niveau", "Le mur d'étagères que tu grimpes"],
     "endT": "Pas encore sorti.",
     "endS": "Colmo est en phase de test final sur Android, iOS suivra. Les "
             "liens vers les stores seront ici le jour de la sortie.",
@@ -268,53 +135,21 @@ T["fr"] = {
 }
 
 T["es"] = {
-    "title": "Colmo - Llena cada tarro justo hasta su número",
-    "desc": "Un puzle de números tranquilo. Cada tarro quiere una cantidad "
-            "exacta: nunca de menos, nunca de más. 60 niveles y modo "
-            "infinito. Muy pronto en Android e iOS.",
+    "title": "Colmo - Llena los tarros hasta el borde",
+    "desc": "Un puzle de números tranquilo en una habitación llena de tarros "
+            "de cristal. Muy pronto en Android e iOS.",
     "badge": "Muy pronto",
-    "h1a": "Cada tarro quiere",
-    "h1b": "una cantidad exacta.",
-    "lead": "Las dosis llegan de una en una. Un tarro que alcanza su número "
-            "exacto estalla y pasa al estante. Quedarse corto vale; pasarse, "
-            "no.",
-    "small": "Gratis. Se juega sin conexión. Sin anuncios en el lanzamiento.",
-    "howT": "Una regla, ningún tutorial",
-    "howS": "Nada se explica con palabras. El tablero está hecho para que la "
-            "regla se explique sola en la primera jugada.",
-    "steps": [
-        ("Llenar hasta el número",
-         "El número del tarro es lo que quiere en total. Alcánzalo exacto y "
-         "el tarro estalla. Con dos dosis o con tres, da igual."),
-        ("Pasarse se rechaza, y es gratis",
-         "Una dosis que se pasaría no llega a caer. No se gasta nada ni se "
-         "pierde nada."),
-        ("Algunos tarros tienen carácter",
-         "Uno de cuello estrecho solo acepta dosis pequeñas y marca su límite "
-         "sobre la boca. Uno sellado no acepta nada hasta que estalla el de "
-         "al lado."),
-    ],
-    "inT": "Qué trae",
-    "inS": "Sin barra de energía, sin vidas, sin esperas. Llegas al final sin "
-           "pagar nada.",
-    "feats": [
-        ("60", "Niveles hechos a mano",
-         "No solo generados. Cada tablero lo resuelve un solucionador de "
-         "referencia antes de publicarse."),
-        ("8", "Niveles que enseñan",
-         "Los ocho primeros presentan una idea cada uno, sin nada de texto."),
-        ("6", "Idiomas",
-         "Inglés, turco, alemán, francés, español y portugués. El tablero es "
-         "mudo de por sí."),
-        ("0", "Anuncios al lanzar",
-         "Sin banners, sin vídeos obligatorios, sin energía que esperar."),
-    ],
+    "h1a": "Una habitación tranquila,",
+    "h1b": "una pared de tarros.",
+    "lead": "Colmo es un puzle de números para jugar con una mano y sin "
+            "prisa. Tarros, estantes, cientos de niveles y la pequeña "
+            "satisfacción de ver uno encajar justo.",
+    "small": "Gratis. Se juega sin conexión.",
+    "bandAlt": "Tarros de Colmo en un estante",
     "shotsT": "Del juego",
     "shotsS": "Capturas reales, no montajes.",
-    "caps": ["El cuello estrecho marca su límite",
-             "El sello se abre cuando estalla el vecino",
-             "Las estrellas salen de lo no gastado",
-             "La pared de estantes que subes"],
+    "caps": ["El tablero", "Cada tarro tiene su carácter",
+             "El final de un nivel", "La pared de estantes que subes"],
     "endT": "Todavía no ha salido.",
     "endS": "Colmo está en pruebas finales en Android, y iOS vendrá después. "
             "El día del lanzamiento los enlaces estarán aquí.",
@@ -324,52 +159,21 @@ T["es"] = {
 }
 
 T["pt"] = {
-    "title": "Colmo - Encha cada pote exatamente até o seu número",
-    "desc": "Um puzzle de números tranquilo. Cada pote quer uma quantidade "
-            "exata: nunca de menos, nunca demais. 60 fases e modo infinito. "
-            "Em breve para Android e iOS.",
+    "title": "Colmo - Encha os potes até a borda",
+    "desc": "Um puzzle de números tranquilo numa sala cheia de potes de "
+            "vidro. Em breve para Android e iOS.",
     "badge": "Em breve",
-    "h1a": "Cada pote quer",
-    "h1b": "uma quantidade exata.",
-    "lead": "As doses chegam uma a uma. Um pote que atinge o seu número "
-            "exatamente estoura e vai para a prateleira. Ficar aquém pode; "
-            "passar, não.",
-    "small": "Grátis. Joga-se offline. Sem anúncios no lançamento.",
-    "howT": "Uma regra, nenhum tutorial",
-    "howS": "Nada é explicado por palavras. O tabuleiro foi feito para a "
-            "regra se explicar sozinha na primeira jogada.",
-    "steps": [
-        ("Encher até o número",
-         "O número do pote é o que ele quer no total. Acerte exato e o pote "
-         "estoura. Com duas doses ou três, tanto faz."),
-        ("Passar é recusado, de graça",
-         "Uma dose que ultrapassaria nem chega a cair. Nada é gasto e nada é "
-         "perdido."),
-        ("Alguns potes têm temperamento",
-         "O de gargalo estreito só aceita doses pequenas e carimba o limite "
-         "acima da boca. O lacrado não aceita nada até o vizinho estourar."),
-    ],
-    "inT": "O que tem dentro",
-    "inS": "Sem barra de energia, sem vidas, sem espera. Você chega ao fim "
-           "sem pagar nada.",
-    "feats": [
-        ("60", "Fases feitas à mão",
-         "Não apenas geradas. Cada tabuleiro é resolvido por um solucionador "
-         "de referência antes de sair."),
-        ("8", "Fases que ensinam",
-         "As oito primeiras trazem uma ideia cada, sem nenhum texto."),
-        ("6", "Idiomas",
-         "Inglês, turco, alemão, francês, espanhol e português. O tabuleiro "
-         "em si não tem palavras."),
-        ("0", "Anúncios no lançamento",
-         "Sem banners, sem vídeos obrigatórios, sem energia para esperar."),
-    ],
+    "h1a": "Uma sala silenciosa,",
+    "h1b": "uma parede de potes.",
+    "lead": "Colmo é um puzzle de números para jogar com uma mão e sem "
+            "pressa. Potes, prateleiras, centenas de fases e a pequena "
+            "satisfação de ver um encaixar certinho.",
+    "small": "Grátis. Joga-se offline.",
+    "bandAlt": "Potes do Colmo numa prateleira",
     "shotsT": "Do jogo",
     "shotsS": "Capturas reais, não montagens.",
-    "caps": ["O gargalo estreito carimba o limite",
-             "O lacre abre quando o vizinho estoura",
-             "As estrelas vêm do que não foi gasto",
-             "A parede de prateleiras que você sobe"],
+    "caps": ["O tabuleiro", "Cada pote tem o seu temperamento",
+             "O fim de uma fase", "A parede de prateleiras que você sobe"],
     "endT": "Ainda não lançado.",
     "endS": "Colmo está em teste final no Android, com iOS a seguir. No dia "
             "do lançamento os links das lojas estarão aqui.",
@@ -377,7 +181,6 @@ T["pt"] = {
     "by": "Colmo é feito por",
     "back": "Voltar ao Colmo",
 }
-
 
 def path_for(code, page):
     """Kok Ingilizce, digerleri kendi klasorunde."""
@@ -487,31 +290,16 @@ def footer(code, t):
                        "account-deletion.html"))
 
 
-def jars(a, b, c):
-    """Kuralin kendisi: tam dolan patlar, tasan reddedilir."""
-    def one(cap, fill, kind):
-        pct = min(100, int(round(100.0 * fill / cap)))
-        return ('<div class="kvz %(k)s"><div class="cam">'
-                '<i style="height:%(p)d%%"></i></div>'
-                '<div class="kaide"></div><b>%(c)d</b></div>'
-                % dict(k=kind, p=pct, c=cap))
-    return '<div class="kavanozlar">%s%s%s</div>' % (
-        one(*a), one(*b), one(*c))
-
-
 def landing(code, t):
+    """Acilis sayfasi.
+
+    Kural ANLATILMIYOR ve sayi VERILMIYOR. Onceki surumde ikisi de vardi:
+    CSS ile cizilmis kavanozlar kurali adim adim anlatiyordu ve "60 bolum",
+    "0 reklam" gibi sayilar sayfayi bir ozellik listesine ceviriyordu. Oyunun
+    kendisi kurali yaziyla anlatmiyor; sitesi de anlatmamali. Gorunen her
+    kavanoz oyunun kendi karesinden geliyor, hicbiri siteye cizilmedi.
+    """
     caps = t["caps"]
-    steps = "".join(
-        '<div class="adim">%s<h3>%s</h3><p>%s</p></div>'
-        % (art, esc(h), esc(p))
-        for (h, p), art in zip(t["steps"], [
-            jars((6, 6, "tam hedef"), (9, 4, ""), (4, 1, "")),
-            jars((6, 5, ""), (9, 9, "tam"), (4, 4, "tam")),
-            jars((6, 2, "hedef"), (9, 3, ""), (4, 0, "")),
-        ]))
-    feats = "".join(
-        '<div class="ozellik"><div class="sayi">%s</div><h3>%s</h3><p>%s</p></div>'
-        % (esc(n), esc(h), esc(p)) for n, h, p in t["feats"])
     shots = "".join(
         '<figure><img src="/assets/shots/%s" alt="%s" width="800" height="1422" loading="lazy"><figcaption>%s</figcaption></figure>'
         % (f, esc(c), esc(c))
@@ -534,20 +322,8 @@ def landing(code, t):
     </div>
 </section>
 
-<section class="duvar-bolum">
-    <div class="kap">
-        <h2>%(howT)s</h2>
-        <p class="bolum-alt">%(howS)s</p>
-        <div class="adimlar">%(steps)s</div>
-    </div>
-</section>
-
-<section>
-    <div class="kap">
-        <h2>%(inT)s</h2>
-        <p class="bolum-alt">%(inS)s</p>
-        <div class="ozellikler">%(feats)s</div>
-    </div>
+<section class="bant">
+    <img src="/assets/colmo_share.png" alt="%(bandAlt)s" width="1200" height="630" loading="lazy">
 </section>
 
 <section class="duvar-bolum">
@@ -568,8 +344,7 @@ def landing(code, t):
 </section>
 """ % dict(badge=esc(t["badge"]), h1a=esc(t["h1a"]), h1b=esc(t["h1b"]),
            lead=esc(t["lead"]), small=esc(t["small"]), cap0=esc(caps[0]),
-           howT=esc(t["howT"]), howS=esc(t["howS"]), steps=steps,
-           inT=esc(t["inT"]), inS=esc(t["inS"]), feats=feats,
+           bandAlt=esc(t["bandAlt"]),
            shotsT=esc(t["shotsT"]), shotsS=esc(t["shotsS"]), shots=shots,
            endT=esc(t["endT"]), endS=esc(t["endS"]))
             + """
@@ -588,7 +363,6 @@ def landing(code, t):
 </script>
 """ % dict(site=SITE)
             + footer(code, t))
-
 
 def legal(code, t, page, title, body):
     return (head(code, page, "%s - Colmo" % title, t["desc"])
