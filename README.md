@@ -1,6 +1,6 @@
 # colmo-site
 
-[colmo.dozi.app](https://colmo.dozi.app) - Colmo'nun tanitim sayfasi, gizlilik
+[colmo.bardino.app](https://colmo.bardino.app) - Colmo'nun tanitim sayfasi, gizlilik
 politikasi, kullanim kosullari ve hesap silme sayfasi.
 
 Oyun deposu ayri ve ozeldir: `ceressa/colmo` (`com.bardino.colmo`).

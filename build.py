@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""colmo.dozi.app sayfalarini uretir.
+"""colmo.bardino.app sayfalarini uretir.
 
     python build.py
 
@@ -16,9 +16,9 @@ import io
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = "https://colmo.dozi.app"
+SITE = "https://colmo.bardino.app"
 PKG = "com.bardino.colmo"
-MAIL = "info@dozi.app"
+MAIL = "info@bardino.app"
 UPDATED = "2026-08-26"
 
 # Dil kodu -> (html lang, og locale, kendi dilindeki adi, kok mu)
@@ -271,7 +271,7 @@ def footer(code, t):
     p, tm, ad = t["legal"]
     return """<footer>
     <div class="kap">
-        <span>%(by)s <a href="https://dozi.app">Bardino Technology</a>.</span>
+        <span>%(by)s <a href="https://bardino.app">Bardino Technology</a>.</span>
         <div class="f-baglantilar">
             <a href="/%(lp)s">%(p)s</a>
             <a href="/%(lt)s">%(tm)s</a>
@@ -402,7 +402,7 @@ if __name__ == "__main__":
                                   legal(code, t, page, title, body)))
 
     # ── sabit dosyalar ──────────────────────────────────────────────────
-    write("CNAME", "colmo.dozi.app\n")
+    write("CNAME", "colmo.bardino.app\n")
     write("robots.txt",
           "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % SITE)
     urls = "".join(

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://colmo.dozi.app/sitemap.xml
+Sitemap: https://colmo.bardino.app/sitemap.xml

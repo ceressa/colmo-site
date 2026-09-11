@@ -9,7 +9,7 @@ Gizlilik metni uygulamadaki `docs/store/PRIVACY_POLICY.md` ile ayni gercegi
 anlatmali. Orasi degisince burasi da degisir.
 """
 
-MAIL = "info@dozi.app"
+MAIL = "info@bardino.app"
 PKG = "com.bardino.colmo"
 
 
