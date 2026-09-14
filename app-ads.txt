@@ -2,8 +2,9 @@
 #
 # Yayinci: Bardino Technology / AdMob pub-1767292468741192.
 # Yetkili satici listesi hesap duzeyinde, o yuzden Decimo ve Palmo ile
-# ayni. Magaza kaydindaki web sitesi alani colmo.dozi.app oldugu icin
-# dogrulama bu dosyadan yapiliyor.
+# ayni. Magaza kaydindaki web sitesi alani Play'de colmo.bardino.app
+# (2026-09-12'den beri), iOS'ta sonraki surume kadar colmo.dozi.app; eski
+# adres dozi-redirect-colmo deposundan bu dosyanin aynisini sunuyor.
 #
 # Reklam ACIK (2026-08-26). Android app id ...~4254427973,
 # iOS ...~3512191947; ikisi de bu yayincinin altinda.
@@ -12,7 +13,7 @@
 # yapistir satirlari sarar ve DIRECT satirini ikiye boler; ayristirici
 # o dosyayi okuyamaz ve envanter yetkisiz sayilir.
 #
-# Yayina aldiktan SONRA https://colmo.dozi.app/app-ads.txt adresini GET
+# Yayina aldiktan SONRA https://colmo.bardino.app/app-ads.txt adresini GET
 # ile geri oku. Yazma isleminin "basarili" demesi yetmez.
 
 google.com, pub-1767292468741192, DIRECT, f08c47fec0942fa0
