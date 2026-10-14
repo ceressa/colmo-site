@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A calm number puzzle set in a room full of glass jars. Free on Android and iOS.">
+    <meta name="description" content="What Colmo stores on your device, what it syncs to the cloud save, what it measures and what the ad network receives.">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://colmo.bardino.app/privacy.html">
     <meta property="og:title" content="Privacy policy - Colmo">
-    <meta property="og:description" content="A calm number puzzle set in a room full of glass jars. Free on Android and iOS.">
+    <meta property="og:description" content="What Colmo stores on your device, what it syncs to the cloud save, what it measures and what the ad network receives.">
     <meta property="og:image" content="https://colmo.bardino.app/assets/colmo_share.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -16,7 +16,7 @@
     <meta property="og:site_name" content="Colmo">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Privacy policy - Colmo">
-    <meta name="twitter:description" content="A calm number puzzle set in a room full of glass jars. Free on Android and iOS.">
+    <meta name="twitter:description" content="What Colmo stores on your device, what it syncs to the cloud save, what it measures and what the ad network receives.">
     <meta name="twitter:image" content="https://colmo.bardino.app/assets/colmo_share.png">
     <meta name="theme-color" content="#FFF4FB" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#3A2A4D" media="(prefers-color-scheme: dark)">
@@ -24,17 +24,12 @@
     <link rel="canonical" href="https://colmo.bardino.app/privacy.html">
     <link rel="alternate" hreflang="en" href="https://colmo.bardino.app/privacy.html">
     <link rel="alternate" hreflang="tr" href="https://colmo.bardino.app/tr/privacy.html">
-    <link rel="alternate" hreflang="de" href="https://colmo.bardino.app/de/privacy.html">
-    <link rel="alternate" hreflang="fr" href="https://colmo.bardino.app/fr/privacy.html">
-    <link rel="alternate" hreflang="es" href="https://colmo.bardino.app/es/privacy.html">
-    <link rel="alternate" hreflang="pt" href="https://colmo.bardino.app/pt/privacy.html">
-    <link rel="alternate" hreflang="x-default" href="https://colmo.bardino.app/">
+    <link rel="alternate" hreflang="x-default" href="https://colmo.bardino.app/privacy.html">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/assets/colmo_icon.png">
     <link rel="manifest" href="/manifest.json">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" href="/assets/fonts/nunito-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/nunito-900.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/css/legal.css">
 </head>
 <body>
@@ -44,7 +39,7 @@
             <img src="/assets/colmo_icon.png" alt="Colmo" width="40" height="40">
             <b>COLMO</b>
         </a>
-        <div class="diller"><a href="/privacy.html" hreflang="en" aria-current="page">English</a><a href="/tr/privacy.html" hreflang="tr">Türkçe</a><a href="/de/privacy.html" hreflang="de">Deutsch</a><a href="/fr/privacy.html" hreflang="fr">Français</a><a href="/es/privacy.html" hreflang="es">Español</a><a href="/pt/privacy.html" hreflang="pt">Português</a></div>
+        <div class="diller"><a href="/privacy.html" hreflang="en" lang="en" aria-current="page"><span class="dil-ad">English</span><span class="dil-kod" aria-hidden="true">EN</span></a><a href="/tr/privacy.html" hreflang="tr" lang="tr"><span class="dil-ad">Türkçe</span><span class="dil-kod" aria-hidden="true">TR</span></a></div>
     </div>
 </header>
 
@@ -52,25 +47,22 @@
     <div class="kap">
         <a class="geri" href="/">&larr; Back to Colmo</a>
         <h1>Privacy policy</h1>
-        <p class="tarih">Last updated: 2026-08-26</p>
-        <div class="govde"><h2>1. Overview</h2><p>Colmo is a number puzzle. It is playable entirely offline and requires no account. This page describes the small amount of data the game handles and why.</p><h2>2. What we process</h2><ul><li><strong>Game progress</strong> (levels cleared, stars, best endless score, which helper lessons you have seen): stored on your device. If the device is online, the same data is synced to Google Firebase under an anonymous identifier so it can be recovered on a new device. No name, e-mail or contact detail is part of that record.</li><li><strong>Optional Google sign-in</strong>: if you choose it, your anonymous save is linked to your Google account so it survives a change of device. We receive only the basic profile (e-mail address) Google provides for authentication. Signing in is never required to play.</li><li><strong>Settings</strong> (sound, music, language, haptics): stored on your device only.</li><li><strong>Gameplay measurement</strong> (Google Analytics for Firebase): the game records what happened, not who you are. Which level was started, won, lost or left, how many doses it took, which helper was used, whether a language was changed. This exists to answer one question: where the game is too hard or unclear. Firebase's ad signals are switched off in code, so this measurement never feeds an advertising profile.</li><li><strong>Ads</strong> (Google AdMob): from level 11 onwards the game shows an occasional full-screen ad between levels, never after a loss. There is also an ad you may choose to watch to earn one life; it is always optional and nothing is taken if you skip it. To select and measure ads, Google receives the device's advertising ID and standard request data (approximate region, device type). In the EEA, the UK and Switzerland you are asked for consent before any of this happens, and your answer is stored on the device.</li><li><strong>Crash reports</strong> (Firebase Crashlytics): if the game crashes, the technical details of the crash are sent (device model, OS version, the point in the code that failed). A game that crashes silently is a game nobody reports.</li></ul><h2>3. What we do not do</h2><ul><li>No banner ads, no ad on the loss screen, and no ad before level 11.</li><li>No account, no name and no e-mail is ever sent to the ad network.</li><li>No location, no contacts, no photos, no microphone.</li><li>We do not sell your data. The only third party that receives anything is Google, and only what serving and measuring an ad requires.</li></ul><h2>4. Where the data lives</h2><p>Cloud saves are stored in Google Firebase (Firestore) in the project <strong>colmo-bardino</strong>. Access rules restrict every record to the account that owns it. Firebase's own processing is covered by Google's privacy documentation.</p><h2>5. Deletion</h2><p>Uninstalling the app removes local data. To delete a cloud save, see <a href="/account-deletion.html">Account deletion</a>.</p><h2>6. Children</h2><p>Colmo contains no chat and no user-generated content. It is not directed at children and does not knowingly collect personal data from them; the only optional personal datum in the product is the Google e-mail used for sign-in. The game does show ads, so it is rated for a general audience rather than declared a children's app.</p><h2>7. Changes</h2><p>Material changes to this policy will be reflected here with a new date.</p><h2>8. Contact</h2><p><a href="mailto:info@bardino.app">info@bardino.app</a></p></div>
+        <p class="tarih">Last updated: <time datetime="2026-10-14">14 October 2026</time></p>
+        <div class="govde"><h2>1. Overview</h2><p>Colmo is a number puzzle. It can be played entirely offline, and signing in is never required. This page describes the small amount of data the game handles and why.</p><h2>2. What we process</h2><ul><li><strong>Game progress</strong> (levels cleared, stars, best endless score, coins and lives, which helper lessons you have seen): stored on your device. If the device is online, the same data is synced to Google Firebase under an anonymous identifier that the game creates on first launch, so it can be recovered on a new device. No name, e-mail or contact detail is part of that record.</li><li><strong>Optional sign-in</strong>: if you choose Sign in with Google in Settings, or Sign in with Apple on iPhone and iPad, your anonymous save is linked to that account so it survives a change of device. We receive only the basic profile the provider gives for authentication: your e-mail address, or with Apple the relay address Apple provides if you choose to hide yours. Signing in is never required to play.</li><li><strong>Purchase</strong>: the only item Colmo sells is <strong>Remove ads</strong>, a one-time purchase. The App Store or Google Play processes the payment; we do not receive your payment details. The game records on the device that ads are removed and can ask the store to restore the purchase.</li><li><strong>Settings</strong> (sound, music, language, haptics): stored on your device only.</li><li><strong>Gameplay measurement</strong> (Google Analytics for Firebase): the game records what happened, not who you are. Which level was started, won, lost or left, how many doses it took, which helper was used, whether a language was changed. This exists to answer one question: where the game is too hard or unclear. Firebase's ad signals are switched off in code, so this measurement never feeds an advertising profile.</li><li><strong>Ads</strong> (Google AdMob): from level 11 onwards the game shows an occasional full-screen ad between levels, never after a loss. There is also an ad you may choose to watch to earn one life; it is always optional and nothing is taken if you skip it. To select and measure ads, Google receives the device's advertising ID and standard request data (approximate region, device type). In the EEA, the UK and Switzerland you are asked for consent before any of this happens, and your answer is stored on the device.</li><li><strong>Crash reports</strong> (Firebase Crashlytics): if the game crashes, the technical details of the crash are sent (device model, OS version, the point in the code that failed). A game that crashes silently is a game nobody reports.</li></ul><h2>3. What we do not do</h2><ul><li>No banner ads, no ad on the loss screen, and no ad before level 11.</li><li>No account, no name and no e-mail is ever sent to the ad network.</li><li>No location, no contacts, no photos, no microphone.</li><li>We do not sell your data. Apart from the Google services listed above, the only other company involved is Apple, and only if you sign in with Apple or buy on the App Store.</li></ul><h2>4. Where the data lives</h2><p>Cloud saves are stored in Google Firebase (Firestore) in the project <strong>colmo-bardino</strong>. Access rules restrict every record to the account that owns it; the only other access is read-only access for Bardino's own administration account. Firebase's own processing is covered by Google's privacy documentation.</p><h2>5. Deletion</h2><p>Uninstalling the app removes the data stored on the device. If you have signed in, you can delete your account and cloud save in the game: <strong>Menu &rarr; Settings &rarr; Delete account</strong>. The other routes, and what is kept afterwards, are described on the <a href="/account-deletion.html">Account deletion</a> page.</p><h2>6. Children</h2><p>Colmo contains no chat and no user-generated content. It is not directed at children and does not knowingly collect personal data from them; the only optional personal data in the product is the e-mail address of the Google or Apple account used for sign-in. The game does show ads, so it is rated for a general audience rather than declared a children's app.</p><h2>7. Changes</h2><p>Material changes to this policy will be reflected here with a new date.</p><h2>8. Contact</h2><p><!--email_off--><a href="mailto:info@bardino.app">info@bardino.app</a><!--/email_off--></p></div>
     </div>
 </section>
 <footer class="aile">
     <div class="kap aile-ust">
         <a class="aile-marka" href="https://bardino.app/"><svg class="aile-logo bardino-intro" viewBox="0 0 600 150" data-bardino-intro role="img" aria-label="Bardino"><g class="bi-mark"><g transform="translate(0 6) scale(1.12)"><rect x="4.5" y="9.5" width="91" height="87" rx="21" class="bi-ef bi-es" stroke-width="5"/><rect x="4.5" y="3" width="91" height="87" rx="21" fill="#FFC83D" class="bi-es" stroke-width="5"/><g fill="none" stroke="#1B2F4A" stroke-width="11.2" stroke-linecap="round"><path d="M37.1 22.1V68.9"/><circle cx="51.5" cy="54.5" r="14.4"/></g></g></g><g class="bi-word"><g transform="translate(134 8) scale(.62)" fill="none" stroke="currentColor" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19V136"/><circle cx="52" cy="100" r="36"/><circle cx="166" cy="100" r="36"/><path d="M202 64V136"/><path d="M252 64V136M252 100A36 36 0 0 1 297.32 65.23"/><circle cx="374" cy="100" r="36"/><path d="M410 19V136"/><path d="M460 64V136"/><path d="M510 64V136M510 100A36 36 0 0 1 582 100V136"/><circle cx="664" cy="100" r="36"/></g></g><g transform="translate(139 112) scale(.65)"><g class="bi-stone"><rect x="2" y="6" width="32" height="32" rx="9" class="bi-ef bi-es" stroke-width="3.5"/><rect x="2" y="2" width="32" height="32" rx="9" fill="#2E2C7A" class="bi-es" stroke-width="3.5"/></g><g class="bi-stone"><rect x="44" y="6" width="32" height="32" rx="9" class="bi-ef bi-es" stroke-width="3.5"/><rect x="44" y="2" width="32" height="32" rx="9" fill="#FF5BA3" class="bi-es" stroke-width="3.5"/></g><g class="bi-stone"><rect x="86" y="6" width="32" height="32" rx="9" class="bi-ef bi-es" stroke-width="3.5"/><rect x="86" y="2" width="32" height="32" rx="9" fill="#ABD7B6" class="bi-es" stroke-width="3.5"/></g></g><g class="bi-dot" transform="translate(419.2 30.94)"><rect x="-9.92" y="-19.84" width="19.84" height="19.84" rx="5.58" fill="#FFC83D" class="bi-es" stroke-width="3.1"/></g></svg></a>
         <div class="aile-kardes">
-            <p>Colmo is made by Bardino, a small independent studio. If you like it, meet its two siblings:</p>
+            <p>More from Bardino:</p>
             <ul><li><a href="https://decimo.bardino.app/"><img src="/assets/aile/decimo.webp" alt="" width="44" height="44" loading="lazy"><span><b>Decimo</b><small>Number chain</small></span></a></li><li><a href="https://palmo.bardino.app/"><img src="/assets/aile/palmo.webp" alt="" width="44" height="44" loading="lazy"><span><b>Palmo</b><small>Weave the whole board</small></span></a></li></ul>
         </div>
     </div>
     <div class="kap aile-alt">
-        <div class="f-baglantilar">
-            <a href="/privacy.html">Privacy</a>
-            <a href="/terms.html">Terms of use</a>
-            <a href="/account-deletion.html">Account deletion</a>
-        </div>
-        <span>&copy; 2026 Bardino Technology</span>
+        <p class="f-baglantilar"><a href="/privacy.html">Privacy policy</a><span class="f-ayrac" aria-hidden="true"> · </span><a href="/terms.html">Terms of use</a><span class="f-ayrac" aria-hidden="true"> · </span><a href="/account-deletion.html">Account deletion</a><span class="f-ayrac" aria-hidden="true"> · </span>Support: <!--email_off--><a href="mailto:info@bardino.app">info@bardino.app</a><!--/email_off--></p>
+        <p class="f-imza"><a href="https://bardino.app/">A Bardino game</a><span class="f-ayrac" aria-hidden="true"> · </span>&copy; 2026 Bardino Technology</p>
+        <p class="f-not">This site sets no cookies and loads nothing from other servers.</p>
     </div>
 </footer>
 

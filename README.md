@@ -17,9 +17,23 @@ Icerik `build.py` icinde sozluk, yasal metinler `legal_text.py` icinde, HTML
 yalnizca cikti. **Uretilen `.html` dosyalarini elle duzenleme**, bir sonraki
 derlemede geri gider.
 
-- Acilis sayfasi alti dilde: en (kok), tr, de, fr, es, pt.
-- Yasal sayfalar Ingilizce ve Turkce. Yarim cevrilmis bir sozlesme
-  cevrilmemis olandan kotudur; diger dillerin altbilgisi Ingilizceye gider.
+- Acilis sayfasi alti dilde: en (kok), tr, de, fr, es, pt (lang `pt-BR`).
+- Yasal sayfalar Ingilizce ve Turkce; dil secicileri ve hreflang'leri de
+  yalniz bu ikisini listeler. Yarim cevrilmis bir sozlesme cevrilmemis olandan
+  kotudur; diger dillerin altbilgisi Ingilizceye gider. Turkce yasal metin
+  "siz" der, tanitim sayfasi "sen".
+
+## Yazi tipi
+
+Nunito sitenin kendi dosyasi (`assets/fonts/*.woff2`, lisans `OFL.txt`),
+oyunun TTF'lerinden alt kume:
+
+```
+python tools/build-fonts.py
+```
+
+Sayfa baska hicbir sunucudan bir sey yuklemiyor ve altbilgi bunu soyluyor;
+Google Fonts baglantisi geri eklenirse o cumle yalan olur.
 
 ## Gorseller de uretilir
 

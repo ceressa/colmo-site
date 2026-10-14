@@ -25,7 +25,7 @@
 }
 .yasal h2:first-child { margin-top: 0; }
 .yasal p { margin-bottom: 12px; color: var(--ink); }
-.yasal ul { margin: 0 0 14px 20px; }
+.yasal ul, .yasal ol { margin: 0 0 14px 22px; }
 .yasal li { margin-bottom: 8px; color: var(--ink); }
 .yasal strong { color: var(--baslik); }
 

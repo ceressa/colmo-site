@@ -10,6 +10,15 @@
  * hicbir yerde blur yok; her kabartma tam piksel, tam renk.
  */
 
+/* Nunito sitenin kendi dosyasi: oyunun TTF'lerinden Latin + Latin Extended-A
+   alt kumesi (tools/build-fonts.py). Google Fonts'tan yuklenmiyor, yani
+   ziyaretcinin IP'si baska bir sunucuya gitmiyor. Lisans assets/fonts/OFL.txt. */
+@font-face { font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/nunito-400.woff2") format("woff2"); }
+@font-face { font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap; src: url("/assets/fonts/nunito-600.woff2") format("woff2"); }
+@font-face { font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/nunito-700.woff2") format("woff2"); }
+@font-face { font-family: Nunito; font-style: normal; font-weight: 800; font-display: swap; src: url("/assets/fonts/nunito-800.woff2") format("woff2"); }
+@font-face { font-family: Nunito; font-style: normal; font-weight: 900; font-display: swap; src: url("/assets/fonts/nunito-900.woff2") format("woff2"); }
+
 :root {
   --zemin:   #FFF4FB;
   --duvar:   #FBE6F2;
@@ -100,6 +109,7 @@ a { color: var(--baglanti); }
    birden cok ulkede konusuluyor. */
 .diller { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
 .diller a {
+  position: relative;
   display: inline-block; padding: 4px 9px; border-radius: var(--r-s);
   font-size: 13px; font-weight: 800; text-decoration: none;
   color: var(--soluk); border: 2px solid transparent;
@@ -110,6 +120,23 @@ a { color: var(--baglanti); }
   border-color: var(--kontur); box-shadow: 2px 2px 0 var(--kontur);
 }
 
+/* Telefonda alti dil adi iki satira tasiyordu. 600 px altinda kisa kod
+   gorunur (EN, TR...); tam ad ekran okuyucu icin yerinde kalir, yalnizca
+   gorsel olarak gizlenir. */
+.dil-kod { display: none; }
+@media (max-width: 599px) {
+  .ust .kap { gap: 10px; }
+  .marka { gap: 8px; }
+  .marka b { font-size: 18px; }
+  .diller { gap: 3px; flex-wrap: nowrap; }
+  .diller a { padding: 3px 6px; font-size: 12.5px; }
+  .dil-ad {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+  .dil-kod { display: inline; }
+}
+
 /* ── Kahraman ────────────────────────────────────────────────────────── */
 .kahraman { padding: 58px 0 44px; }
 .kahraman .kap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: center; }
@@ -118,20 +145,8 @@ a { color: var(--baglanti); }
   .kahraman .kap { grid-template-columns: 1fr; gap: 30px; }
 }
 
-.rozet {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--sari); color: var(--lacivert);
-  border: 3px solid var(--kontur); border-radius: 999px;
-  box-shadow: 3px 3px 0 var(--kontur);
-  padding: 6px 15px; font-weight: 900; font-size: 14px; letter-spacing: .02em;
-}
-.rozet::before {
-  content: ""; width: 9px; height: 9px; border-radius: 50%;
-  background: var(--lacivert);
-}
-
 .kahraman h1 {
-  margin: 18px 0 14px;
+  margin: 0 0 14px;
   font-size: clamp(34px, 5.6vw, 54px); line-height: 1.08;
   font-weight: 900; letter-spacing: -.02em; color: var(--baslik);
 }
@@ -162,7 +177,11 @@ h2 {
 }
 .bolum-alt { text-align: center; color: var(--soluk); margin: 10px auto 30px; max-width: 62ch; }
 
-.adimlar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+/* Nasil oynanir: uc kart, oyunun kendi kurali. */
+.nasil { padding-top: 24px; }
+.nasil h2, .duvar-bolum h2 { margin-bottom: 28px; }
+.adimlar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; list-style: none; }
+.adim b { color: var(--baslik); }
 .ozellikler { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
 @media (max-width: 900px) { .adimlar { grid-template-columns: 1fr; } .ozellikler { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .ozellikler { grid-template-columns: 1fr; } }
@@ -182,6 +201,14 @@ h2 {
   width: min(1120px, 92vw); margin: 0 auto;
   border-radius: 20px; border: 4px solid var(--kontur);
   box-shadow: 8px 8px 0 var(--kontur);
+}
+/* Telefonda bant, ustbilgideki logoyu tekrarlayan tam genislikte bir kare
+   oluyordu. Orada kahramandaki telefon karesiyle ayni genislige iner. */
+@media (max-width: 599px) {
+  .bant img {
+    width: min(300px, 76vw); border-width: 3px; border-radius: 16px;
+    box-shadow: 5px 5px 0 var(--kontur);
+  }
 }
 
 /* ── Vitrin ─────────────────────────────────────────────────────────── */
@@ -225,12 +252,14 @@ footer { border-top: 3px solid var(--kontur); background: var(--duvar); padding:
 .aile-kardes img { width: 44px; height: 44px; border-radius: 11px; flex: none; }
 .aile-kardes b { display: block; color: var(--baslik); font-size: 16px; font-weight: 900; line-height: 1.2; }
 .aile-kardes small { display: block; color: var(--soluk); font-size: 13.5px; font-weight: 700; line-height: 1.35; }
-.aile-alt { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; margin-top: 26px; }
-.aile-alt > span { color: var(--soluk); font-size: 13.5px; }
 @media (prefers-reduced-motion: reduce) { .aile-kardes a { transition: none; } }
-.f-baglantilar { display: flex; gap: 18px; flex-wrap: wrap; }
-.f-baglantilar a { color: var(--baslik); font-weight: 800; font-size: 15px; text-decoration: none; }
-.f-baglantilar a:hover { color: var(--pembe); text-decoration: underline; }
+/* Uc oyun sitesinde ayni sira: yasal baglantilar ve destek, sonra studyo
+   satiri, sonra cerez notu. */
+.aile-alt { margin-top: 26px; display: grid; gap: 6px; }
+.aile-alt p { color: var(--soluk); font-size: 14px; }
+.f-baglantilar { font-size: 15px; }
+.f-baglantilar a, .f-imza a { color: var(--baslik); font-weight: 800; text-decoration: none; }
+.f-baglantilar a:hover, .f-imza a:hover { color: var(--pembe); text-decoration: underline; }
 
 /* Bardino kilidi ve acilis filmi (assets/bardino-intro.js). Nokta ucarken
    kutunun ustune cikiyor; overflow gorunur olmali. Kontur ve golge rengi

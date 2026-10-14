@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A calm number puzzle set in a room full of glass jars. Free on Android and iOS.">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="A calm number puzzle: pour numbers into glass jars until each one is exactly full. 120 levels. Free on Android and iOS.">
+    <meta name="robots" content="noindex">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://colmo.bardino.app/index.html">
+    <meta property="og:url" content="https://colmo.bardino.app/">
     <meta property="og:title" content="Colmo">
-    <meta property="og:description" content="A calm number puzzle set in a room full of glass jars. Free on Android and iOS.">
+    <meta property="og:description" content="A calm number puzzle: pour numbers into glass jars until each one is exactly full. 120 levels. Free on Android and iOS.">
     <meta property="og:image" content="https://colmo.bardino.app/assets/colmo_share.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -16,25 +16,16 @@
     <meta property="og:site_name" content="Colmo">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Colmo">
-    <meta name="twitter:description" content="A calm number puzzle set in a room full of glass jars. Free on Android and iOS.">
+    <meta name="twitter:description" content="A calm number puzzle: pour numbers into glass jars until each one is exactly full. 120 levels. Free on Android and iOS.">
     <meta name="twitter:image" content="https://colmo.bardino.app/assets/colmo_share.png">
     <meta name="theme-color" content="#FFF4FB" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#3A2A4D" media="(prefers-color-scheme: dark)">
     <title>Colmo</title>
-    <link rel="canonical" href="https://colmo.bardino.app/index.html">
-    <link rel="alternate" hreflang="en" href="https://colmo.bardino.app/index.html">
-    <link rel="alternate" hreflang="tr" href="https://colmo.bardino.app/tr/index.html">
-    <link rel="alternate" hreflang="de" href="https://colmo.bardino.app/de/index.html">
-    <link rel="alternate" hreflang="fr" href="https://colmo.bardino.app/fr/index.html">
-    <link rel="alternate" hreflang="es" href="https://colmo.bardino.app/es/index.html">
-    <link rel="alternate" hreflang="pt" href="https://colmo.bardino.app/pt/index.html">
-    <link rel="alternate" hreflang="x-default" href="https://colmo.bardino.app/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/assets/colmo_icon.png">
     <link rel="manifest" href="/manifest.json">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" href="/assets/fonts/nunito-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/nunito-900.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -44,7 +35,7 @@
             <img src="/assets/colmo_icon.png" alt="Colmo" width="40" height="40">
             <b>COLMO</b>
         </a>
-        <div class="diller"><a href="/index.html" hreflang="en" aria-current="page">English</a><a href="/tr/index.html" hreflang="tr">Türkçe</a><a href="/de/index.html" hreflang="de">Deutsch</a><a href="/fr/index.html" hreflang="fr">Français</a><a href="/es/index.html" hreflang="es">Español</a><a href="/pt/index.html" hreflang="pt">Português</a></div>
+        <div class="diller"><a href="/" hreflang="en" lang="en" aria-current="page"><span class="dil-ad">English</span><span class="dil-kod" aria-hidden="true">EN</span></a><a href="/tr/" hreflang="tr" lang="tr"><span class="dil-ad">Türkçe</span><span class="dil-kod" aria-hidden="true">TR</span></a><a href="/de/" hreflang="de" lang="de"><span class="dil-ad">Deutsch</span><span class="dil-kod" aria-hidden="true">DE</span></a><a href="/fr/" hreflang="fr" lang="fr"><span class="dil-ad">Français</span><span class="dil-kod" aria-hidden="true">FR</span></a><a href="/es/" hreflang="es" lang="es"><span class="dil-ad">Español</span><span class="dil-kod" aria-hidden="true">ES</span></a><a href="/pt/" hreflang="pt-BR" lang="pt-BR"><span class="dil-ad">Português</span><span class="dil-kod" aria-hidden="true">PT</span></a></div>
     </div>
 </header>
 
@@ -53,17 +44,14 @@
     <div class="kap aile-ust">
         <a class="aile-marka" href="https://bardino.app/"><svg class="aile-logo bardino-intro" viewBox="0 0 600 150" data-bardino-intro role="img" aria-label="Bardino"><g class="bi-mark"><g transform="translate(0 6) scale(1.12)"><rect x="4.5" y="9.5" width="91" height="87" rx="21" class="bi-ef bi-es" stroke-width="5"/><rect x="4.5" y="3" width="91" height="87" rx="21" fill="#FFC83D" class="bi-es" stroke-width="5"/><g fill="none" stroke="#1B2F4A" stroke-width="11.2" stroke-linecap="round"><path d="M37.1 22.1V68.9"/><circle cx="51.5" cy="54.5" r="14.4"/></g></g></g><g class="bi-word"><g transform="translate(134 8) scale(.62)" fill="none" stroke="currentColor" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19V136"/><circle cx="52" cy="100" r="36"/><circle cx="166" cy="100" r="36"/><path d="M202 64V136"/><path d="M252 64V136M252 100A36 36 0 0 1 297.32 65.23"/><circle cx="374" cy="100" r="36"/><path d="M410 19V136"/><path d="M460 64V136"/><path d="M510 64V136M510 100A36 36 0 0 1 582 100V136"/><circle cx="664" cy="100" r="36"/></g></g><g transform="translate(139 112) scale(.65)"><g class="bi-stone"><rect x="2" y="6" width="32" height="32" rx="9" class="bi-ef bi-es" stroke-width="3.5"/><rect x="2" y="2" width="32" height="32" rx="9" fill="#2E2C7A" class="bi-es" stroke-width="3.5"/></g><g class="bi-stone"><rect x="44" y="6" width="32" height="32" rx="9" class="bi-ef bi-es" stroke-width="3.5"/><rect x="44" y="2" width="32" height="32" rx="9" fill="#FF5BA3" class="bi-es" stroke-width="3.5"/></g><g class="bi-stone"><rect x="86" y="6" width="32" height="32" rx="9" class="bi-ef bi-es" stroke-width="3.5"/><rect x="86" y="2" width="32" height="32" rx="9" fill="#ABD7B6" class="bi-es" stroke-width="3.5"/></g></g><g class="bi-dot" transform="translate(419.2 30.94)"><rect x="-9.92" y="-19.84" width="19.84" height="19.84" rx="5.58" fill="#FFC83D" class="bi-es" stroke-width="3.1"/></g></svg></a>
         <div class="aile-kardes">
-            <p>Colmo is made by Bardino, a small independent studio. If you like it, meet its two siblings:</p>
+            <p>More from Bardino:</p>
             <ul><li><a href="https://decimo.bardino.app/"><img src="/assets/aile/decimo.webp" alt="" width="44" height="44" loading="lazy"><span><b>Decimo</b><small>Number chain</small></span></a></li><li><a href="https://palmo.bardino.app/"><img src="/assets/aile/palmo.webp" alt="" width="44" height="44" loading="lazy"><span><b>Palmo</b><small>Weave the whole board</small></span></a></li></ul>
         </div>
     </div>
     <div class="kap aile-alt">
-        <div class="f-baglantilar">
-            <a href="/privacy.html">Privacy</a>
-            <a href="/terms.html">Terms of use</a>
-            <a href="/account-deletion.html">Account deletion</a>
-        </div>
-        <span>&copy; 2026 Bardino Technology</span>
+        <p class="f-baglantilar"><a href="/privacy.html">Privacy policy</a><span class="f-ayrac" aria-hidden="true"> · </span><a href="/terms.html">Terms of use</a><span class="f-ayrac" aria-hidden="true"> · </span><a href="/account-deletion.html">Account deletion</a><span class="f-ayrac" aria-hidden="true"> · </span>Support: <!--email_off--><a href="mailto:info@bardino.app">info@bardino.app</a><!--/email_off--></p>
+        <p class="f-imza"><a href="https://bardino.app/">A Bardino game</a><span class="f-ayrac" aria-hidden="true"> · </span>&copy; 2026 Bardino Technology</p>
+        <p class="f-not">This site sets no cookies and loads nothing from other servers.</p>
     </div>
 </footer>
 

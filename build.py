@@ -11,6 +11,11 @@ Kok dizin INGILIZCE. Diger sitelerde kok Turkce ama bu urun magazada
 varsayilan olarak Ingilizce listeleniyor ve alti dilde yayina giriyor; koke
 gelen ziyaretcinin cogu Turkce bilmiyor. Turkce /tr/ altinda ve dil secici
 her sayfanin tepesinde.
+
+Yazi tipi sitenin kendi dosyasi (assets/fonts, tools/build-fonts.py). Sayfa
+baska hicbir sunucudan bir sey yuklemiyor; altbilgideki "cerez yok, baska
+sunucu yok" cumlesi bunu soyluyor ve bir Google Fonts baglantisi geri gelirse
+yalan olur.
 """
 import io
 import os
@@ -21,7 +26,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://colmo.bardino.app"
 PKG = "com.bardino.colmo"
 MAIL = "info@bardino.app"
-UPDATED = "2026-08-26"
 APP_STORE = "https://apps.apple.com/app/colmo-jar-puzzle/id6805859722"
 GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=" + PKG
 
@@ -31,203 +35,385 @@ GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=" + PKG
 # kilavuzu ise esit ya da buyuk istiyor. Apple rozeti sirada once gelir.
 BADGE_H = 48
 
-# Dil kodu -> (html lang, og locale, kendi dilindeki adi, kok mu)
+# Dil kodu -> (html lang + hreflang, og locale, kendi dilindeki adi, kisa kod).
+# Portekizce metin Brezilya Portekizcesi (voce, magaza listesi pt-BR), o yuzden
+# lang pt-BR; klasor /pt/ kaliyor, adresi degistirmek baglantilari kirardi.
 LANGS = [
-    ("en", "en", "en_US", "English", True),
-    ("tr", "tr", "tr_TR", "Türkçe", False),
-    ("de", "de", "de_DE", "Deutsch", False),
-    ("fr", "fr", "fr_FR", "Français", False),
-    ("es", "es", "es_ES", "Español", False),
-    ("pt", "pt", "pt_BR", "Português", False),
+    ("en", "en", "en_US", "English", "EN"),
+    ("tr", "tr", "tr_TR", "Türkçe", "TR"),
+    ("de", "de", "de_DE", "Deutsch", "DE"),
+    ("fr", "fr", "fr_FR", "Français", "FR"),
+    ("es", "es", "es_ES", "Español", "ES"),
+    ("pt", "pt-BR", "pt_BR", "Português", "PT"),
 ]
+ALL_CODES = [c for c, _l, _o, _n, _k in LANGS]
+LANG_ATTR = dict((c, l) for c, l, _o, _n, _k in LANGS)
 
 # Yasal metin yalnizca EN ve TR'de tam yazildi; digerleri Ingilizceye baglanir.
-# Yarim cevrilmis bir sozlesme, cevrilmemis olandan kotudur.
-LEGAL_LANGS = {"en", "tr"}
+# Yarim cevrilmis bir sozlesme, cevrilmemis olandan kotudur. Yasal sayfanin dil
+# secicisi ve hreflang'i de yalniz bu ikisini listeler: eskiden alti dili
+# listeliyordu ve /de|fr|es|pt/ altindaki 12 yasal adres 404 donuyordu.
+LEGAL_LANGS = ["en", "tr"]
+
+FONT_WEIGHTS = (400, 900)  # on yukleme: govde ve baslik
+
+MONTHS = {
+    "en": ["January", "February", "March", "April", "May", "June", "July",
+           "August", "September", "October", "November", "December"],
+    "tr": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz",
+           "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+}
+
+NBSP = " "
 
 T = {}
 
 T["en"] = {
     "title": "Colmo - Fill every jar to the brim",
-    "desc": "A calm number puzzle set in a room full of glass jars. Free on "
-            "Android and iOS.",
-    "badge": "Out now",
-    "h1a": "A quiet room,",
-    "h1b": "a wall of jars.",
+    "desc": "A calm number puzzle: pour numbers into glass jars until each "
+            "one is exactly full. 120 levels. Free on Android and iOS.",
+    "h1a": "Fill every jar",
+    "h1b": "to the brim.",
     "lead": "Colmo is a number puzzle you can play with one hand and no "
-            "hurry. Jars, shelves, hundreds of levels, and the small "
-            "satisfaction of one landing exactly right.",
+            "hurry. You pour numbers into jars until each one is exactly "
+            "full. 120 levels, an endless mode, and the small satisfaction "
+            "of every jar filled exactly.",
     "small": "Free. Plays offline.",
+    "howT": "How to play",
+    "how": [
+        ("Fill each jar exactly",
+         "Every jar has a capacity. Pour the numbers you are dealt until it "
+         "is exactly full: a full jar bursts and goes to the shelf. A number "
+         "that would overflow is refused."),
+        ("Starred jars are the goal",
+         "Burst the starred jars to win the level. Some jars have their own "
+         "rules: a narrow neck only takes small numbers, and a wax-sealed jar "
+         "stays shut until a starred jar next to it bursts."),
+        ("Three jokers, no clock",
+         "<b>Hold</b> keeps the number in hand for later, <b>Undo</b> takes "
+         "back your last move, <b>Swap</b> trades the number in hand for a "
+         "new one. No level is timed. Finish with numbers to spare for more "
+         "stars."),
+    ],
     "bandAlt": "Colmo jars on a shelf",
     "shotsT": "From the game",
-    "shotsS": "Real screenshots, not mock-ups.",
-    "caps": ["The board", "Every jar has its own character",
-             "The end of a level", "The shelf wall you climb"],
-    "endT": "Out now.",
+    "caps": ["The board", "A wax-sealed jar", "The end of a level",
+             "The level map"],
+    "endT": "Fill your first jar.",
     "endS": "Free on the App Store and Google Play.",
     "stores": ("Colmo on the App Store", "Colmo on Google Play"),
-    "legal": ("Privacy", "Terms of use", "Account deletion"),
-    "aile_lead": "Colmo is made by Bardino, a small independent studio. If you like it, meet its two siblings:",
+    "legal": ("Privacy policy", "Terms of use", "Account deletion"),
+    "support": "Support",
+    "studio": "A Bardino game",
+    "nocookie": "This site sets no cookies and loads nothing from other "
+                "servers.",
+    "aile_lead": "More from Bardino:",
     "back": "Back to Colmo",
+    "upd": "Last updated",
 }
 
 T["tr"] = {
     "title": "Colmo - Kavanozları ağzına kadar doldur",
-    "desc": "Cam kavanozlarla dolu bir odada geçen sakin bir sayı bulmacası. "
-            "Android ve iOS'ta ücretsiz.",
-    "badge": "Yayında",
-    "h1a": "Sessiz bir oda,",
-    "h1b": "bir duvar dolusu kavanoz.",
-    "lead": "Colmo, tek elle ve acele etmeden oynanan bir sayı bulmacası. "
-            "Kavanozlar, raflar, yüzlerce bölüm ve bir tanesinin tam yerine "
-            "oturmasının o küçük tatmini.",
+    "desc": "Sakin bir sayı bulmacası: sayıları cam kavanozlara dök, her biri "
+            "tam dolsun. 120 bölüm. Android ve iOS'ta ücretsiz.",
+    "h1a": "Her kavanozu",
+    "h1b": "ağzına kadar doldur.",
+    "lead": "Colmo, tek elle ve acele etmeden oynanan bir sayı bulmacası: "
+            "sayıları kavanozlara, her biri tam dolana kadar dökersin. 120 "
+            "bölüm, bir sonsuz mod ve tam dolan her kavanozun verdiği o "
+            "küçük keyif.",
     "small": "Ücretsiz. İnternetsiz oynanır.",
+    "howT": "Nasıl oynanır",
+    "how": [
+        ("Her kavanozu tam doldur",
+         "Her kavanozun bir kapasitesi var. Eline gelen sayıları dökerek onu "
+         "tam doldur: tam dolan kavanoz patlar ve rafa kaldırılır. Taşıracak "
+         "sayıyı kavanoz kabul etmez."),
+        ("Hedef: yıldızlı kavanozlar",
+         "Bölümü kazanmak için yıldızlı kavanozları patlat. Bazı kavanozların "
+         "kendi huyu var: dar boyunlu kavanoz yalnızca küçük sayıları alır, "
+         "mühürlü kavanoz yanındaki yıldızlı kavanoz patlayana kadar "
+         "açılmaz."),
+        ("Üç joker, saat yok",
+         "<b>Beklet</b> elindeki sayıyı sonraya saklar, <b>Geri al</b> son "
+         "hamleni geri alır, <b>Değiştir</b> elindeki sayıyı yenisiyle "
+         "değiştirir. Hiçbir bölüm süreli değil. Az sayıyla bitir, çok "
+         "yıldız al."),
+    ],
     "bandAlt": "Rafta duran Colmo kavanozları",
     "shotsT": "Oyundan kareler",
-    "shotsS": "Hepsi gerçek ekran görüntüsü, temsili değil.",
-    "caps": ["Tahta", "Her kavanozun kendi huyu var",
-             "Bölümün sonu", "Tırmandığın raf duvarı"],
-    "endT": "Çıktı.",
+    "caps": ["Tahta", "Mühürlü kavanoz", "Bölümün sonu", "Bölüm haritası"],
+    "endT": "İlk kavanozunu doldur.",
     "endS": "App Store ve Google Play'de ücretsiz.",
     "stores": ("App Store'da Colmo", "Google Play'de Colmo"),
-    "legal": ("Gizlilik", "Kullanım koşulları", "Hesap silme"),
-    "aile_lead": "Colmo'yu Bardino yapıyor, küçük ve bağımsız bir stüdyo. Sevdiysen iki kardeşiyle de tanış:",
+    "legal": ("Gizlilik politikası", "Kullanım koşulları", "Hesap silme"),
+    "support": "Destek",
+    "studio": "Bir Bardino oyunu",
+    "nocookie": "Bu site çerez kullanmaz ve başka sunuculardan hiçbir şey "
+                "yüklemez.",
+    "aile_lead": "Bardino'nun diğer oyunları:",
     "back": "Colmo'ya dön",
+    "upd": "Son güncelleme",
 }
 
 T["de"] = {
     "title": "Colmo - Fülle die Gläser bis zum Rand",
-    "desc": "Ein ruhiges Zahlenpuzzle in einem Raum voller Gläser. Kostenlos "
-            "für Android und iOS.",
-    "badge": "Jetzt erhältlich",
-    "h1a": "Ein stiller Raum,",
-    "h1b": "eine Wand voller Gläser.",
-    "lead": "Colmo ist ein Zahlenpuzzle für eine Hand und ohne Eile. Gläser, "
-            "Regale, hunderte Level und die kleine Zufriedenheit, wenn "
-            "eines genau passt.",
-    "small": "Kostenlos. Auch offline spielbar.",
+    "desc": "Ein ruhiges Zahlenpuzzle: Gieß Zahlen in Gläser, bis jedes genau "
+            "voll ist. 120 Level. Kostenlos für Android und iOS.",
+    "h1a": "Fülle jedes Glas",
+    "h1b": "bis zum Rand.",
+    "lead": "Colmo ist ein Zahlenpuzzle für eine Hand und ohne Eile. Du "
+            "gießt Zahlen in Gläser, bis jedes genau voll ist. 120 Level, "
+            "ein Endlosmodus und die kleine Zufriedenheit jedes genau "
+            "gefüllten Glases.",
+    "small": "Kostenlos. Offline spielbar.",
+    "howT": "So wird gespielt",
+    "how": [
+        ("Jedes Glas genau füllen",
+         "Jedes Glas hat ein Fassungsvermögen. Gieß die Zahlen, die du "
+         "bekommst, hinein, bis es genau voll ist: Ein volles Glas zerplatzt "
+         "und kommt ins Regal. Eine Zahl, die es überlaufen ließe, wird "
+         "abgelehnt."),
+        ("Sterngläser sind das Ziel",
+         "Lass die Gläser mit Stern zerplatzen, um das Level zu gewinnen. "
+         "Manche Gläser haben eigene Regeln: Ein enger Hals nimmt nur kleine "
+         "Zahlen, und ein mit Wachs versiegeltes Glas bleibt zu, bis ein "
+         "Sternglas daneben zerplatzt."),
+        ("Drei Joker, keine Uhr",
+         "<b>Halten</b> hebt die Zahl in deiner Hand für später auf, "
+         "<b>Zurück</b> nimmt deinen letzten Zug zurück, <b>Tauschen</b> "
+         "tauscht die Zahl in deiner Hand gegen eine neue. Kein Level läuft "
+         "gegen die Zeit. Mit übrigen Zahlen abschließen bringt mehr "
+         "Sterne."),
+    ],
     "bandAlt": "Colmo-Gläser auf einem Regal",
     "shotsT": "Aus dem Spiel",
-    "shotsS": "Echte Screenshots, keine Montagen.",
-    "caps": ["Das Brett", "Jedes Glas hat seinen eigenen Charakter",
-             "Das Ende eines Levels", "Die Regalwand, die du hochsteigst"],
-    "endT": "Jetzt erhältlich.",
+    "caps": ["Das Brett", "Ein mit Wachs versiegeltes Glas",
+             "Das Ende eines Levels", "Die Levelkarte"],
+    "endT": "Fülle dein erstes Glas.",
     "endS": "Kostenlos im App Store und bei Google Play.",
     "stores": ("Colmo im App Store", "Colmo bei Google Play"),
     "legal": ("Datenschutz", "Nutzungsbedingungen", "Konto löschen"),
-    "aile_lead": "Colmo kommt von Bardino, einem kleinen unabhängigen Studio. Wenn es dir gefällt, lern seine zwei Geschwister kennen:",
+    "support": "Support",
+    "studio": "Ein Spiel von Bardino",
+    "nocookie": "Diese Website setzt keine Cookies und lädt nichts von "
+                "anderen Servern.",
+    "aile_lead": "Mehr von Bardino:",
     "back": "Zurück zu Colmo",
 }
 
 T["fr"] = {
     "title": "Colmo - Remplis les bocaux à ras bord",
-    "desc": "Un puzzle de nombres apaisant dans une pièce pleine de bocaux "
-            "en verre. Gratuit sur Android et iOS.",
-    "badge": "Disponible",
-    "h1a": "Une pièce calme,",
-    "h1b": "un mur de bocaux.",
+    "desc": "Un puzzle de nombres apaisant" + NBSP + ": verse des nombres "
+            "dans des bocaux jusqu'à ce que chacun soit exactement plein. 120 "
+            "niveaux. Gratuit sur Android et iOS.",
+    "h1a": "Remplis chaque bocal",
+    "h1b": "à ras bord.",
     "lead": "Colmo est un puzzle de nombres qui se joue d'une main et sans "
-            "se presser. Des bocaux, des étagères, des centaines de niveaux, "
-            "et la petite satisfaction d'en voir un tomber juste.",
+            "se presser. Tu verses des nombres dans des bocaux jusqu'à ce "
+            "que chacun soit exactement plein. 120 niveaux, un mode infini "
+            "et la petite satisfaction de chaque bocal rempli pile.",
     "small": "Gratuit. Jouable hors ligne.",
+    "howT": "Comment jouer",
+    "how": [
+        ("Remplis chaque bocal exactement",
+         "Chaque bocal a une capacité. Verse les nombres que tu reçois "
+         "jusqu'à ce qu'il soit exactement plein" + NBSP + ": un bocal plein "
+         "éclate et rejoint l'étagère. Un nombre qui le ferait déborder est "
+         "refusé."),
+        ("Les bocaux étoilés sont l'objectif",
+         "Fais éclater les bocaux étoilés pour gagner le niveau. Certains "
+         "bocaux ont leurs propres règles" + NBSP + ": un col étroit "
+         "n'accepte que les petits nombres, et un bocal scellé à la cire "
+         "reste fermé jusqu'à ce qu'un bocal étoilé voisin éclate."),
+        ("Trois jokers, pas d'horloge",
+         "<b>Garder</b> met le nombre en main de côté pour plus tard, "
+         "<b>Annuler</b> annule ton dernier coup, <b>Échanger</b> échange le "
+         "nombre en main contre un nouveau. Aucun niveau n'est chronométré. "
+         "Finir avec des nombres d'avance donne plus d'étoiles."),
+    ],
     "bandAlt": "Bocaux Colmo sur une étagère",
     "shotsT": "Images du jeu",
-    "shotsS": "De vraies captures, pas des maquettes.",
-    "caps": ["Le plateau", "Chaque bocal a son caractère",
-             "La fin d'un niveau", "Le mur d'étagères que tu grimpes"],
-    "endT": "Disponible maintenant.",
+    "caps": ["Le plateau", "Un bocal scellé à la cire", "La fin d'un niveau",
+             "La carte des niveaux"],
+    "endT": "Remplis ton premier bocal.",
     "endS": "Gratuit sur l'App Store et Google Play.",
     "stores": ("Colmo sur l'App Store", "Colmo sur Google Play"),
     "legal": ("Confidentialité", "Conditions d'utilisation",
               "Suppression du compte"),
-    "aile_lead": "Colmo est créé par Bardino, un petit studio indépendant. Si tu l'aimes, découvre les deux autres :",
+    "support": "Assistance",
+    "studio": "Un jeu Bardino",
+    "nocookie": "Ce site ne dépose aucun cookie et ne charge rien depuis "
+                "d'autres serveurs.",
+    "aile_lead": "Aussi chez Bardino" + NBSP + ":",
     "back": "Retour à Colmo",
 }
 
 T["es"] = {
     "title": "Colmo - Llena los tarros hasta el borde",
-    "desc": "Un puzle de números tranquilo en una habitación llena de tarros "
-            "de cristal. Gratis en Android e iOS.",
-    "badge": "Ya disponible",
-    "h1a": "Una habitación tranquila,",
-    "h1b": "una pared de tarros.",
+    "desc": "Un puzle de números tranquilo: vierte números en tarros hasta "
+            "que cada uno quede exactamente lleno. 120 niveles. Gratis en "
+            "Android e iOS.",
+    "h1a": "Llena cada tarro",
+    "h1b": "hasta el borde.",
     "lead": "Colmo es un puzle de números para jugar con una mano y sin "
-            "prisa. Tarros, estantes, cientos de niveles y la pequeña "
-            "satisfacción de ver uno encajar justo.",
+            "prisa. Viertes números en tarros hasta que cada uno quede "
+            "exactamente lleno. 120 niveles, un modo infinito y la pequeña "
+            "satisfacción de cada tarro lleno justo.",
     "small": "Gratis. Se juega sin conexión.",
+    "howT": "Cómo se juega",
+    "how": [
+        ("Llena cada tarro exactamente",
+         "Cada tarro tiene una capacidad. Vierte los números que te llegan "
+         "hasta llenarlo exactamente: un tarro lleno estalla y sube a la "
+         "estantería. Un número que lo desbordaría se rechaza."),
+        ("Los tarros con estrella son el objetivo",
+         "Haz estallar los tarros con estrella para ganar el nivel. Algunos "
+         "tarros tienen sus propias reglas: un cuello estrecho solo admite "
+         "números pequeños, y un tarro sellado con cera no se abre hasta que "
+         "estalla un tarro con estrella a su lado."),
+        ("Tres comodines, sin reloj",
+         "<b>Guardar</b> guarda el número de tu mano para después, "
+         "<b>Deshacer</b> deshace tu último movimiento, <b>Cambiar</b> "
+         "cambia el número de tu mano por uno nuevo. Ningún nivel va contra "
+         "el tiempo. Terminar con números de sobra da más estrellas."),
+    ],
     "bandAlt": "Tarros de Colmo en un estante",
     "shotsT": "Del juego",
-    "shotsS": "Capturas reales, no montajes.",
-    "caps": ["El tablero", "Cada tarro tiene su carácter",
-             "El final de un nivel", "La pared de estantes que subes"],
-    "endT": "Ya disponible.",
+    "caps": ["El tablero", "Un tarro sellado con cera",
+             "El final de un nivel", "El mapa de niveles"],
+    "endT": "Llena tu primer tarro.",
     "endS": "Gratis en el App Store y Google Play.",
     "stores": ("Colmo en el App Store", "Colmo en Google Play"),
     "legal": ("Privacidad", "Términos de uso", "Eliminar cuenta"),
-    "aile_lead": "Colmo lo hace Bardino, un pequeño estudio independiente. Si te gusta, conoce a sus dos hermanos:",
+    "support": "Soporte",
+    "studio": "Un juego de Bardino",
+    "nocookie": "Este sitio no usa cookies y no carga nada desde otros "
+                "servidores.",
+    "aile_lead": "Más de Bardino:",
     "back": "Volver a Colmo",
 }
 
 T["pt"] = {
     "title": "Colmo - Encha os potes até a borda",
-    "desc": "Um puzzle de números tranquilo numa sala cheia de potes de "
-            "vidro. Grátis para Android e iOS.",
-    "badge": "Já disponível",
-    "h1a": "Uma sala silenciosa,",
-    "h1b": "uma parede de potes.",
+    "desc": "Um puzzle de números tranquilo: despeje números nos potes até "
+            "cada um ficar exatamente cheio. 120 fases. Grátis para Android "
+            "e iOS.",
+    "h1a": "Encha cada pote",
+    "h1b": "até a borda.",
     "lead": "Colmo é um puzzle de números para jogar com uma mão e sem "
-            "pressa. Potes, prateleiras, centenas de fases e a pequena "
-            "satisfação de ver um encaixar certinho.",
-    "small": "Grátis. Joga-se offline.",
+            "pressa. Você despeja números nos potes até cada um ficar "
+            "exatamente cheio. 120 fases, um modo infinito e a pequena "
+            "satisfação de cada pote cheio na medida.",
+    "small": "Grátis. Funciona offline.",
+    "howT": "Como jogar",
+    "how": [
+        ("Encha cada pote exatamente",
+         "Cada pote tem uma capacidade. Despeje os números que você recebe "
+         "até enchê-lo exatamente: um pote cheio estoura e vai para a "
+         "prateleira. Um número que transbordaria é recusado."),
+        ("Os potes estrelados são o objetivo",
+         "Estoure os potes estrelados para vencer a fase. Alguns potes têm "
+         "regras próprias: um gargalo estreito só aceita números pequenos, e "
+         "um pote selado com cera só abre quando um pote estrelado ao lado "
+         "estoura."),
+        ("Três curingas, sem relógio",
+         "<b>Guardar</b> guarda o número da mão para depois, "
+         "<b>Desfazer</b> desfaz a sua última jogada, <b>Trocar</b> troca o "
+         "número da mão por um novo. Nenhuma fase é cronometrada. Terminar "
+         "com números sobrando vale mais estrelas."),
+    ],
     "bandAlt": "Potes do Colmo numa prateleira",
     "shotsT": "Do jogo",
-    "shotsS": "Capturas reais, não montagens.",
-    "caps": ["O tabuleiro", "Cada pote tem o seu temperamento",
-             "O fim de uma fase", "A parede de prateleiras que você sobe"],
-    "endT": "Já disponível.",
+    "caps": ["O tabuleiro", "Um pote selado com cera", "O fim de uma fase",
+             "O mapa de fases"],
+    "endT": "Encha seu primeiro pote.",
     "endS": "Grátis na App Store e no Google Play.",
     "stores": ("Colmo na App Store", "Colmo no Google Play"),
     "legal": ("Privacidade", "Termos de uso", "Excluir conta"),
-    "aile_lead": "Colmo é feito pela Bardino, um pequeno estúdio independente. Se você gostar, conheça os outros dois:",
+    "support": "Suporte",
+    "studio": "Um jogo da Bardino",
+    "nocookie": "Este site não usa cookies e não carrega nada de outros "
+                "servidores.",
+    "aile_lead": "Mais da Bardino:",
     "back": "Voltar ao Colmo",
 }
 
+
 def path_for(code, page):
-    """Kok Ingilizce, digerleri kendi klasorunde."""
+    """Dosya yolu: kok Ingilizce, digerleri kendi klasorunde."""
     if code == "en":
         return page
     return "%s/%s" % (code, page)
 
 
-def rel_root(code):
-    return "" if code == "en" else "../"
+def href_for(code, page):
+    """Baglanti yolu. Acilis sayfasi klasor adresiyle (/, /tr/): canonical
+    ve og:url eskiden /index.html'i gosteriyordu, ayni sayfa iki adresle
+    indeksleniyordu."""
+    p = "/" + path_for(code, page)
+    if p.endswith("index.html"):
+        p = p[:-len("index.html")]
+    return p
 
 
-def lang_bar(code, page):
+def url_for(code, page):
+    return SITE + href_for(code, page)
+
+
+def esc(s):
+    return (s.replace("&", "&amp;").replace("<", "&lt;")
+             .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def mail_link():
+    """Cloudflare'in adres gizlemesi mailto'yu JS'siz tarayicida 404 veren
+    /cdn-cgi/l/email-protection adresine ceviriyor; email_off durduruyor."""
+    return ('<!--email_off--><a href="mailto:%s">%s</a><!--/email_off-->'
+            % (MAIL, MAIL))
+
+
+def lang_bar(code, page, codes):
+    """Dil secici. Dar ekranda kisa kod (EN, TR...), genis ekranda tam ad;
+    tam ad ekran okuyucu icin her zaman yerinde."""
     out = []
-    for c, _lang, _loc, name, _root in LANGS:
-        href = "/" + path_for(c, page)
+    for c, lang, _loc, name, short in LANGS:
+        if c not in codes:
+            continue
         cur = ' aria-current="page"' if c == code else ""
-        out.append('<a href="%s" hreflang="%s"%s>%s</a>' % (href, c, cur, name))
+        out.append('<a href="%s" hreflang="%s" lang="%s"%s>'
+                   '<span class="dil-ad">%s</span>'
+                   '<span class="dil-kod" aria-hidden="true">%s</span></a>'
+                   % (href_for(c, page), lang, lang, cur, name, short))
     return '<div class="diller">%s</div>' % "".join(out)
 
 
-def head(code, page, title, desc):
-    lang = dict((c, l) for c, l, _o, _n, _r in LANGS)[code]
-    loc = dict((c, o) for c, _l, o, _n, _r in LANGS)[code]
-    r = rel_root(code)
-    alts = "\n    ".join(
-        '<link rel="alternate" hreflang="%s" href="%s/%s">'
-        % (c, SITE, path_for(c, page)) for c, _l, _o, _n, _r in LANGS)
+def head(code, page, title, desc, codes, noindex=False):
+    lang = LANG_ATTR[code]
+    loc = dict((c, o) for c, _l, o, _n, _k in LANGS)[code]
+    if noindex:
+        links = ""
+        robots = "noindex"
+    else:
+        alts = ['<link rel="alternate" hreflang="%s" href="%s">'
+                % (LANG_ATTR[c], url_for(c, page)) for c in codes]
+        alts.append('<link rel="alternate" hreflang="x-default" href="%s">'
+                    % url_for("en", page))
+        links = ('<link rel="canonical" href="%s">\n    %s\n    '
+                 % (url_for(code, page), "\n    ".join(alts)))
+        robots = "index, follow"
+    preload = "\n    ".join(
+        '<link rel="preload" href="/assets/fonts/nunito-%d.woff2" as="font" '
+        'type="font/woff2" crossorigin>' % w for w in FONT_WEIGHTS)
     return """<!DOCTYPE html>
 <html lang="%(lang)s">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="%(desc)s">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="%(robots)s">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="%(site)s/%(path)s">
+    <meta property="og:url" content="%(url)s">
     <meta property="og:title" content="%(title)s">
     <meta property="og:description" content="%(desc)s">
     <meta property="og:image" content="%(site)s/assets/colmo_share.png">
@@ -242,40 +428,30 @@ def head(code, page, title, desc):
     <meta name="theme-color" content="#FFF4FB" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#3A2A4D" media="(prefers-color-scheme: dark)">
     <title>%(title)s</title>
-    <link rel="canonical" href="%(site)s/%(path)s">
-    %(alts)s
-    <link rel="alternate" hreflang="x-default" href="%(site)s/">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    %(links)s<link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/assets/colmo_icon.png">
     <link rel="manifest" href="/manifest.json">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    %(preload)s
     <link rel="stylesheet" href="/css/%(css)s">
 </head>
 <body>
-""" % dict(lang=lang, desc=esc(desc), site=SITE, path=path_for(code, page),
-           title=esc(title), loc=loc, alts=alts,
-           css="legal.css" if page != "index.html" else "style.css",
-           r=r)
+""" % dict(lang=lang, desc=esc(desc), site=SITE, url=url_for(code, page),
+           title=esc(title), loc=loc, links=links, robots=robots,
+           preload=preload,
+           css="style.css" if page == "index.html" else "legal.css")
 
 
-def esc(s):
-    return (s.replace("&", "&amp;").replace("<", "&lt;")
-             .replace(">", "&gt;").replace('"', "&quot;"))
-
-
-def header(code, page):
+def header(code, page, codes):
     return """<header class="ust">
     <div class="kap">
-        <a class="marka" href="/%(home)s">
+        <a class="marka" href="%(home)s">
             <img src="/assets/colmo_icon.png" alt="Colmo" width="40" height="40">
             <b>COLMO</b>
         </a>
         %(bar)s
     </div>
 </header>
-""" % dict(home="" if code == "en" else code + "/", bar=lang_bar(code, page))
+""" % dict(home=href_for(code, "index.html"), bar=lang_bar(code, page, codes))
 
 
 # ── altbilgi: aile blogu ────────────────────────────────────────────────────
@@ -283,9 +459,7 @@ def header(code, page):
 # Uc oyun sitesinde (decimo, colmo, palmo) altbilgi AYNI yapida: solda
 # Bardino'nun kendi logosu (isaret + yazi, altinda slogan yok), sagda tek
 # cumle ve iki kardes oyunun karti, en altta yasal satir. Her site bunu kendi
-# kurallariyla ciziyor; yapi ortak, gorunum oyunun. Eskiden burada tek bir
-# "X is made by Bardino Technology." satiri vardi ve kardes oyunlar hic
-# anilmiyordu.
+# kurallariyla ciziyor; yapi ortak, gorunum oyunun.
 #
 # Logo uc oyunun acilisindaki tasli kilit (isaret + yazi + taslar), ayni
 # geometri; gorunur olunca ayni filmi oynar (assets/bardino-intro.js, dort
@@ -313,6 +487,10 @@ KARDES_TAG = {
 KARDES_AD = {"decimo": "Decimo", "colmo": "Colmo", "palmo": "Palmo"}
 
 
+def studio_url(code):
+    return "https://bardino.app/tr/" if code == "tr" else "https://bardino.app/"
+
+
 def kardes_url(g, code):
     """Kardesin sitesi, ayni dilde. Uc site de ayni yapida: kok Ingilizce,
     digerleri /<kod>/ (Decimo'nun sitesi Ekim 2026'da alti dile gecti)."""
@@ -332,32 +510,41 @@ def aile(code, t, kardesler):
             <ul>%(kart)s</ul>
         </div>
     </div>
-""" % dict(studyo="https://bardino.app/tr/" if code == "tr" else "https://bardino.app/",
-           logo=BARDINO_LOGO, lead=esc(t["aile_lead"]), kart=kart)
+""" % dict(studyo=studio_url(code), logo=BARDINO_LOGO,
+           lead=esc(t["aile_lead"]), kart=kart)
 
+
+SEP = '<span class="f-ayrac" aria-hidden="true"> · </span>'
 
 
 def footer(code, t):
+    """Uc oyun sitesinde ayni sira: Gizlilik politikasi · Kullanim kosullari
+    · Hesap silme · Destek: e-posta; altinda studyo satiri ve cerez notu.
+    EN ve TR disindaki diller Ingilizce yasal sayfalara baglanir."""
     p, tm, ad = t["legal"]
+    lc = code if code in LEGAL_LANGS else "en"
+    links = SEP.join([
+        '<a href="%s">%s</a>' % (href_for(lc, "privacy.html"), esc(p)),
+        '<a href="%s">%s</a>' % (href_for(lc, "terms.html"), esc(tm)),
+        '<a href="%s">%s</a>' % (href_for(lc, "account-deletion.html"), esc(ad)),
+        # Fransizca iki noktadan once bosluk ister (bolunmez).
+        '%s%s: %s' % (esc(t["support"]), NBSP if code == "fr" else "",
+                      mail_link()),
+    ])
     return """<footer class="aile">
 %(aile)s    <div class="kap aile-alt">
-        <div class="f-baglantilar">
-            <a href="/%(lp)s">%(p)s</a>
-            <a href="/%(lt)s">%(tm)s</a>
-            <a href="/%(la)s">%(ad)s</a>
-        </div>
-        <span>&copy; 2026 Bardino Technology</span>
+        <p class="f-baglantilar">%(links)s</p>
+        <p class="f-imza"><a href="%(studio_url)s">%(studio)s</a>%(sep)s&copy; 2026 Bardino Technology</p>
+        <p class="f-not">%(nocookie)s</p>
     </div>
 </footer>
 
 <script src="/assets/bardino-intro.js" defer></script>
 </body>
 </html>
-""" % dict(aile=aile(code, t, ("decimo", "palmo")), p=esc(p), tm=esc(tm), ad=esc(ad),
-           lp=path_for(code if code in LEGAL_LANGS else "en", "privacy.html"),
-           lt=path_for(code if code in LEGAL_LANGS else "en", "terms.html"),
-           la=path_for(code if code in LEGAL_LANGS else "en",
-                       "account-deletion.html"))
+""" % dict(aile=aile(code, t, ("decimo", "palmo")), links=links, sep=SEP,
+           studio_url=studio_url(code), studio=esc(t["studio"]),
+           nocookie=esc(t["nocookie"]))
 
 
 def badge_width(rel):
@@ -387,11 +574,17 @@ def stores(code, t):
 def landing(code, t):
     """Acilis sayfasi.
 
-    Kural ANLATILMIYOR ve sayi VERILMIYOR. Onceki surumde ikisi de vardi:
-    CSS ile cizilmis kavanozlar kurali adim adim anlatiyordu ve "60 bolum",
-    "0 reklam" gibi sayilar sayfayi bir ozellik listesine ceviriyordu. Oyunun
-    kendisi kurali yaziyla anlatmiyor; sitesi de anlatmamali. Gorunen her
-    kavanoz oyunun kendi karesinden geliyor, hicbiri siteye cizilmedi.
+    Agustos 2026'daki surum kurali hic anlatmiyordu ("oyunun kendisi kurali
+    yaziyla anlatmiyor; sitesi de anlatmamali"). Ekim 2026 denetimi bunun
+    bedelini gosterdi: sayfa oyunun ne oldugunu soylemiyordu. Simdi uc kisa
+    kartta kural var. Her cumle oyunun magaza metninden (android/fastlane/
+    metadata/android/<dil>/full_description.txt) ve koddan dogrulandi: mum
+    muhur yalniz komsu YILDIZLI kavanoz patlayinca erir (lib/engine/game.dart),
+    joker adlari oyunun kendi etiketleri (lib/l10n/app_*.arb jokerPark/Undo/
+    Swap), bolum sayisi lib/engine/level.dart totalLevels = 120.
+
+    Gorunen her kavanoz hala oyunun kendi karesinden geliyor, hicbiri siteye
+    cizilmedi.
     """
     caps = t["caps"]
     shots = "".join(
@@ -399,13 +592,15 @@ def landing(code, t):
         % (f, esc(c), esc(c))
         for f, c in zip(["01_board.webp", "02_wax.webp", "03_result.webp",
                          "04_map.webp"], caps))
-    return (head(code, "index.html", t["title"], t["desc"])
-            + header(code, "index.html")
+    how = "".join(
+        '<li class="adim"><h3>%s</h3><p>%s</p></li>' % (esc(h), p)
+        for h, p in t["how"])
+    return (head(code, "index.html", t["title"], t["desc"], ALL_CODES)
+            + header(code, "index.html", ALL_CODES)
             + """
 <section class="kahraman">
     <div class="kap">
         <div>
-            <span class="rozet">%(badge)s</span>
             <h1>%(h1a)s<br><em>%(h1b)s</em></h1>
             <p class="alt">%(lead)s</p>
             <p class="kucuk">%(small)s</p>
@@ -417,6 +612,13 @@ def landing(code, t):
     </div>
 </section>
 
+<section class="nasil">
+    <div class="kap">
+        <h2>%(howT)s</h2>
+        <ol class="adimlar">%(how)s</ol>
+    </div>
+</section>
+
 <section class="bant">
     <img src="/assets/colmo_share.png" alt="%(bandAlt)s" width="1200" height="630" loading="lazy">
 </section>
@@ -424,7 +626,6 @@ def landing(code, t):
 <section class="duvar-bolum">
     <div class="kap">
         <h2>%(shotsT)s</h2>
-        <p class="bolum-alt">%(shotsS)s</p>
         <div class="vitrin">%(shots)s</div>
     </div>
 </section>
@@ -438,10 +639,11 @@ def landing(code, t):
         </div>
     </div>
 </section>
-""" % dict(badge=esc(t["badge"]), h1a=esc(t["h1a"]), h1b=esc(t["h1b"]),
+""" % dict(h1a=esc(t["h1a"]), h1b=esc(t["h1b"]),
            lead=esc(t["lead"]), small=esc(t["small"]), cap0=esc(caps[0]),
+           howT=esc(t["howT"]), how=how,
            bandAlt=esc(t["bandAlt"]),
-           shotsT=esc(t["shotsT"]), shotsS=esc(t["shotsS"]), shots=shots,
+           shotsT=esc(t["shotsT"]), shots=shots,
            endT=esc(t["endT"]), endS=esc(t["endS"]),
            stores=stores(code, t))
             + """
@@ -461,21 +663,27 @@ def landing(code, t):
 """ % dict(site=SITE)
             + footer(code, t))
 
-def legal(code, t, page, title, body):
-    return (head(code, page, "%s - Colmo" % title, t["desc"])
-            + header(code, page)
+
+def human_date(code, iso):
+    y, m, d = (int(x) for x in iso.split("-"))
+    return "%d %s %d" % (d, MONTHS[code][m - 1], y)
+
+
+def legal(code, t, page, title, desc, date, body):
+    return (head(code, page, "%s - Colmo" % title, desc, LEGAL_LANGS)
+            + header(code, page, LEGAL_LANGS)
             + """
 <section class="yasal">
     <div class="kap">
-        <a class="geri" href="/%(home)s">&larr; %(back)s</a>
+        <a class="geri" href="%(home)s">&larr; %(back)s</a>
         <h1>%(title)s</h1>
-        <p class="tarih">%(upd)s: %(date)s</p>
+        <p class="tarih">%(upd)s: <time datetime="%(iso)s">%(date)s</time></p>
         <div class="govde">%(body)s</div>
     </div>
 </section>
-""" % dict(home="" if code == "en" else code + "/", back=esc(t["back"]),
-           title=esc(title), date=UPDATED, body=body,
-           upd="Last updated" if code == "en" else "Son guncelleme")
+""" % dict(home=href_for(code, "index.html"), back=esc(t["back"]),
+           title=esc(title), iso=date, date=human_date(code, date),
+           body=body, upd=t["upd"])
             + footer(code, t))
 
 
@@ -490,21 +698,22 @@ if __name__ == "__main__":
     import legal_text
 
     made = []
-    for code, _l, _o, _n, _r in LANGS:
+    for code in ALL_CODES:
         t = T[code]
         made.append(write(path_for(code, "index.html"), landing(code, t)))
         if code in LEGAL_LANGS:
-            for page, title, body in legal_text.pages(code):
+            for page, title, desc, date, body in legal_text.pages(code):
                 made.append(write(path_for(code, page),
-                                  legal(code, t, page, title, body)))
+                                  legal(code, t, page, title, desc, date,
+                                        body)))
 
     # ── sabit dosyalar ──────────────────────────────────────────────────
     write("CNAME", "colmo.bardino.app\n")
     write("robots.txt",
           "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % SITE)
     urls = "".join(
-        "  <url><loc>%s/%s</loc></url>\n" % (SITE, path_for(c, p))
-        for c, _l, _o, _n, _r in LANGS
+        "  <url><loc>%s</loc></url>\n" % url_for(c, p)
+        for c in ALL_CODES
         for p in (["index.html"] + (["privacy.html", "terms.html",
                                      "account-deletion.html"]
                                     if c in LEGAL_LANGS else [])))
@@ -520,8 +729,9 @@ if __name__ == "__main__":
           '    {"src": "/assets/colmo_icon_192.png", "sizes": "192x192", "type": "image/png"},\n'
           '    {"src": "/assets/colmo_icon_512.png", "sizes": "512x512", "type": "image/png"}\n'
           '  ]\n}\n')
-    write("404.html", head("en", "index.html", "Colmo", T["en"]["desc"])
-          + header("en", "index.html")
+    write("404.html", head("en", "index.html", "Colmo", T["en"]["desc"],
+                           ALL_CODES, noindex=True)
+          + header("en", "index.html", ALL_CODES)
           + '\n<section class="kapanis"><div class="kap"><div class="kutu">'
             '<h2>Nothing here.</h2>'
             '<p class="bolum-alt">That page does not exist. '
