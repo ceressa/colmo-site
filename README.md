@@ -40,8 +40,10 @@ ofset kabartmadir ("a blur is a bug"). Sitede de hicbir yerde blur yok.
 GitHub Pages, `main` dali, kok dizin. `CNAME` dosyasi alan adini tasiyor;
 DNS tarafinda `colmo` icin `ceressa.github.io` CNAME kaydi gerekir.
 
-## Cikinca yapilacak
+## Magaza baglantilari
 
-Oyun magazalarda yayina girdiginde acilis sayfasindaki "cok yakinda" rozeti
-yerine Google Play ve App Store dugmeleri gelecek. Metinler `build.py`
-icinde `endT` / `endS` anahtarlarinda.
+Colmo Eylul 2026'dan beri iki magazada. Baglantilar `build.py` basindaki
+`APP_STORE` / `GOOGLE_PLAY`, rozetler `assets/badges/<dil>/` altinda: Decimo
+deposundaki `store_assets/badges` klasorunden, her dilin resmi rozeti. Google
+PNG'sinin seffaf kenari kirpildi ki iki rozet ayni gorunen boyda dursun.
+Rozete golge ya da cerceve eklenmez (Apple ve Google kilavuzu).

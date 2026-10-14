@@ -14,12 +14,22 @@ her sayfanin tepesinde.
 """
 import io
 import os
+import re
+import struct
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://colmo.bardino.app"
 PKG = "com.bardino.colmo"
 MAIL = "info@bardino.app"
 UPDATED = "2026-08-26"
+APP_STORE = "https://apps.apple.com/app/colmo-jar-puzzle/id6805859722"
+GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=" + PKG
+
+# Magaza rozetleri resmi dosyalar (Decimo deposu, store_assets/badges), her
+# dilin kendi rozeti. Google PNG'sinin seffaf kenari kirpildi: kirpilmadan ayni
+# boya getirilince Google rozeti Apple'inkinden kucuk gorunuyor, Google'in
+# kilavuzu ise esit ya da buyuk istiyor. Apple rozeti sirada once gelir.
+BADGE_H = 48
 
 # Dil kodu -> (html lang, og locale, kendi dilindeki adi, kok mu)
 LANGS = [
@@ -39,9 +49,9 @@ T = {}
 
 T["en"] = {
     "title": "Colmo - Fill every jar to the brim",
-    "desc": "A calm number puzzle set in a room full of glass jars. Coming "
-            "soon to Android and iOS.",
-    "badge": "Coming soon",
+    "desc": "A calm number puzzle set in a room full of glass jars. Free on "
+            "Android and iOS.",
+    "badge": "Out now",
     "h1a": "A quiet room,",
     "h1b": "a wall of jars.",
     "lead": "Colmo is a number puzzle you can play with one hand and no "
@@ -53,9 +63,9 @@ T["en"] = {
     "shotsS": "Real screenshots, not mock-ups.",
     "caps": ["The board", "Every jar has its own character",
              "The end of a level", "The shelf wall you climb"],
-    "endT": "Not out yet.",
-    "endS": "Colmo is in final testing on Android, with iOS to follow. This "
-            "page will carry the store links the day it is out.",
+    "endT": "Out now.",
+    "endS": "Free on the App Store and Google Play.",
+    "stores": ("Colmo on the App Store", "Colmo on Google Play"),
     "legal": ("Privacy", "Terms of use", "Account deletion"),
     "by": "Colmo is made by",
     "back": "Back to Colmo",
@@ -64,8 +74,8 @@ T["en"] = {
 T["tr"] = {
     "title": "Colmo - Kavanozları ağzına kadar doldur",
     "desc": "Cam kavanozlarla dolu bir odada geçen sakin bir sayı bulmacası. "
-            "Android ve iOS'ta çok yakında.",
-    "badge": "Çok yakında",
+            "Android ve iOS'ta ücretsiz.",
+    "badge": "Yayında",
     "h1a": "Sessiz bir oda,",
     "h1b": "bir duvar dolusu kavanoz.",
     "lead": "Colmo, tek elle ve acele etmeden oynanan bir sayı bulmacası. "
@@ -77,9 +87,9 @@ T["tr"] = {
     "shotsS": "Hepsi gerçek ekran görüntüsü, temsili değil.",
     "caps": ["Tahta", "Her kavanozun kendi huyu var",
              "Bölümün sonu", "Tırmandığın raf duvarı"],
-    "endT": "Henüz çıkmadı.",
-    "endS": "Colmo Android'de son testlerinde, ardından iOS geliyor. Çıktığı "
-            "gün mağaza bağlantıları bu sayfada olacak.",
+    "endT": "Çıktı.",
+    "endS": "App Store ve Google Play'de ücretsiz.",
+    "stores": ("App Store'da Colmo", "Google Play'de Colmo"),
     "legal": ("Gizlilik", "Kullanım koşulları", "Hesap silme"),
     "by": "Colmo,",
     "back": "Colmo'ya dön",
@@ -87,9 +97,9 @@ T["tr"] = {
 
 T["de"] = {
     "title": "Colmo - Fülle die Gläser bis zum Rand",
-    "desc": "Ein ruhiges Zahlenpuzzle in einem Raum voller Gläser. Bald für "
-            "Android und iOS.",
-    "badge": "Bald verfügbar",
+    "desc": "Ein ruhiges Zahlenpuzzle in einem Raum voller Gläser. Kostenlos "
+            "für Android und iOS.",
+    "badge": "Jetzt erhältlich",
     "h1a": "Ein stiller Raum,",
     "h1b": "eine Wand voller Gläser.",
     "lead": "Colmo ist ein Zahlenpuzzle für eine Hand und ohne Eile. Gläser, "
@@ -101,9 +111,9 @@ T["de"] = {
     "shotsS": "Echte Screenshots, keine Montagen.",
     "caps": ["Das Brett", "Jedes Glas hat seinen eigenen Charakter",
              "Das Ende eines Levels", "Die Regalwand, die du hochsteigst"],
-    "endT": "Noch nicht erschienen.",
-    "endS": "Colmo ist auf Android im letzten Test, iOS folgt. Am Tag der "
-            "Veröffentlichung stehen die Store-Links hier.",
+    "endT": "Jetzt erhältlich.",
+    "endS": "Kostenlos im App Store und bei Google Play.",
+    "stores": ("Colmo im App Store", "Colmo bei Google Play"),
     "legal": ("Datenschutz", "Nutzungsbedingungen", "Konto löschen"),
     "by": "Colmo stammt von",
     "back": "Zurück zu Colmo",
@@ -112,8 +122,8 @@ T["de"] = {
 T["fr"] = {
     "title": "Colmo - Remplis les bocaux à ras bord",
     "desc": "Un puzzle de nombres apaisant dans une pièce pleine de bocaux "
-            "en verre. Bientôt sur Android et iOS.",
-    "badge": "Bientôt disponible",
+            "en verre. Gratuit sur Android et iOS.",
+    "badge": "Disponible",
     "h1a": "Une pièce calme,",
     "h1b": "un mur de bocaux.",
     "lead": "Colmo est un puzzle de nombres qui se joue d'une main et sans "
@@ -125,9 +135,9 @@ T["fr"] = {
     "shotsS": "De vraies captures, pas des maquettes.",
     "caps": ["Le plateau", "Chaque bocal a son caractère",
              "La fin d'un niveau", "Le mur d'étagères que tu grimpes"],
-    "endT": "Pas encore sorti.",
-    "endS": "Colmo est en phase de test final sur Android, iOS suivra. Les "
-            "liens vers les stores seront ici le jour de la sortie.",
+    "endT": "Disponible maintenant.",
+    "endS": "Gratuit sur l'App Store et Google Play.",
+    "stores": ("Colmo sur l'App Store", "Colmo sur Google Play"),
     "legal": ("Confidentialité", "Conditions d'utilisation",
               "Suppression du compte"),
     "by": "Colmo est réalisé par",
@@ -137,8 +147,8 @@ T["fr"] = {
 T["es"] = {
     "title": "Colmo - Llena los tarros hasta el borde",
     "desc": "Un puzle de números tranquilo en una habitación llena de tarros "
-            "de cristal. Muy pronto en Android e iOS.",
-    "badge": "Muy pronto",
+            "de cristal. Gratis en Android e iOS.",
+    "badge": "Ya disponible",
     "h1a": "Una habitación tranquila,",
     "h1b": "una pared de tarros.",
     "lead": "Colmo es un puzle de números para jugar con una mano y sin "
@@ -150,9 +160,9 @@ T["es"] = {
     "shotsS": "Capturas reales, no montajes.",
     "caps": ["El tablero", "Cada tarro tiene su carácter",
              "El final de un nivel", "La pared de estantes que subes"],
-    "endT": "Todavía no ha salido.",
-    "endS": "Colmo está en pruebas finales en Android, y iOS vendrá después. "
-            "El día del lanzamiento los enlaces estarán aquí.",
+    "endT": "Ya disponible.",
+    "endS": "Gratis en el App Store y Google Play.",
+    "stores": ("Colmo en el App Store", "Colmo en Google Play"),
     "legal": ("Privacidad", "Términos de uso", "Eliminar cuenta"),
     "by": "Colmo es de",
     "back": "Volver a Colmo",
@@ -161,8 +171,8 @@ T["es"] = {
 T["pt"] = {
     "title": "Colmo - Encha os potes até a borda",
     "desc": "Um puzzle de números tranquilo numa sala cheia de potes de "
-            "vidro. Em breve para Android e iOS.",
-    "badge": "Em breve",
+            "vidro. Grátis para Android e iOS.",
+    "badge": "Já disponível",
     "h1a": "Uma sala silenciosa,",
     "h1b": "uma parede de potes.",
     "lead": "Colmo é um puzzle de números para jogar com uma mão e sem "
@@ -174,9 +184,9 @@ T["pt"] = {
     "shotsS": "Capturas reais, não montagens.",
     "caps": ["O tabuleiro", "Cada pote tem o seu temperamento",
              "O fim de uma fase", "A parede de prateleiras que você sobe"],
-    "endT": "Ainda não lançado.",
-    "endS": "Colmo está em teste final no Android, com iOS a seguir. No dia "
-            "do lançamento os links das lojas estarão aqui.",
+    "endT": "Já disponível.",
+    "endS": "Grátis na App Store e no Google Play.",
+    "stores": ("Colmo na App Store", "Colmo no Google Play"),
     "legal": ("Privacidade", "Termos de uso", "Excluir conta"),
     "by": "Colmo é feito por",
     "back": "Voltar ao Colmo",
@@ -290,6 +300,30 @@ def footer(code, t):
                        "account-deletion.html"))
 
 
+def badge_width(rel):
+    """Rozetin BADGE_H yuksekligindeki genisligi (img width/height icin)."""
+    p = os.path.join(HERE, rel.replace("/", os.sep))
+    if rel.endswith(".svg"):
+        m = re.search(r'<svg[^>]*?\swidth="([\d.]+)"[^>]*?\sheight="([\d.]+)"',
+                      io.open(p, encoding="utf-8").read())
+        w, h = float(m.group(1)), float(m.group(2))
+    else:
+        w, h = struct.unpack(">II", io.open(p, "rb").read(24)[16:24])
+    return round(w * BADGE_H / h)
+
+
+def stores(code, t):
+    a_alt, g_alt = t["stores"]
+    a_img = "assets/badges/%s/app_store.svg" % code
+    g_img = "assets/badges/%s/google_play.png" % code
+    return ('<div class="magaza">'
+            '<a href="%s"><img src="/%s" alt="%s" width="%d" height="%d"></a>'
+            '<a href="%s"><img src="/%s" alt="%s" width="%d" height="%d"></a>'
+            '</div>'
+            % (APP_STORE, a_img, esc(a_alt), badge_width(a_img), BADGE_H,
+               GOOGLE_PLAY, g_img, esc(g_alt), badge_width(g_img), BADGE_H))
+
+
 def landing(code, t):
     """Acilis sayfasi.
 
@@ -315,6 +349,7 @@ def landing(code, t):
             <h1>%(h1a)s<br><em>%(h1b)s</em></h1>
             <p class="alt">%(lead)s</p>
             <p class="kucuk">%(small)s</p>
+            %(stores)s
         </div>
         <div class="telefon">
             <img src="/assets/shots/01_board.webp" alt="%(cap0)s" width="800" height="1422" loading="eager">
@@ -339,6 +374,7 @@ def landing(code, t):
         <div class="kutu">
             <h2>%(endT)s</h2>
             <p class="bolum-alt">%(endS)s</p>
+            %(stores)s
         </div>
     </div>
 </section>
@@ -346,7 +382,8 @@ def landing(code, t):
            lead=esc(t["lead"]), small=esc(t["small"]), cap0=esc(caps[0]),
            bandAlt=esc(t["bandAlt"]),
            shotsT=esc(t["shotsT"]), shotsS=esc(t["shotsS"]), shots=shots,
-           endT=esc(t["endT"]), endS=esc(t["endS"]))
+           endT=esc(t["endT"]), endS=esc(t["endS"]),
+           stores=stores(code, t))
             + """
 <script type="application/ld+json">
 {

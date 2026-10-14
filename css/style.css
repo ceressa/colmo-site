@@ -115,6 +115,14 @@ a { color: var(--pembe-d); }
   box-shadow: 8px 8px 0 var(--lacivert);
 }
 
+/* Magaza rozetleri resmi dosyalar, olduklari gibi: kabartma, cerceve ya da
+   renk eklenmez (Apple ve Google kilavuzu). Kati golge kurali burada islemez.
+   Iki rozet arasi en az rozet boyunun dortte biri. */
+.magaza { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.magaza a { display: block; }
+.magaza img { height: 48px; width: auto; }
+.kapanis .magaza { justify-content: center; }
+
 /* ── Bolumler ───────────────────────────────────────────────────────── */
 section { padding: 54px 0; }
 .duvar-bolum { background: var(--duvar); border-top: 3px solid var(--lacivert); border-bottom: 3px solid var(--lacivert); }
@@ -163,6 +171,7 @@ h2 {
   border-radius: 24px; box-shadow: 8px 8px 0 var(--lacivert);
   padding: 38px 26px; max-width: 720px; margin: 0 auto;
 }
+.kapanis .kutu .bolum-alt { margin-bottom: 0; }
 
 /* ── Altbilgi ───────────────────────────────────────────────────────── */
 footer { border-top: 3px solid var(--lacivert); background: var(--duvar); padding: 26px 0 30px; }
