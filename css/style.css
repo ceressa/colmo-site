@@ -28,6 +28,36 @@
   --raf-k:   #F2C05A;
   --r:       18px;
   --r-s:     12px;
+
+  /* Lacivert iki ayri is goruyordu: baslik rengi ve kontur/golge rengi. Acik
+     temada ikisi ayni renk, koyu temada ayrilmalari gerek (baslik acilir,
+     kontur koyulasir), o yuzden iki ad. Sari rozetin uzerindeki lacivert ise
+     zeminden bagimsiz, --lacivert olarak kaldi. */
+  --baslik:  var(--lacivert);
+  --kontur:  var(--lacivert);
+  --ust:     rgba(255, 244, 251, .92);
+  --baglanti: var(--pembe-d);
+  color-scheme: light dark;
+}
+
+/* Koyu tema: sistem tercihine uyuyor, bardino.app ile ayni kural. Oyunun koyu
+   temasi yok; zemin bardino.app'in koyu temada Colmo kartina verdigi renk
+   (#3A2A4D, oyunun murekkebi), kontur ve golge oradaki #07060F. Ara tonlar bu
+   ikisiyle acik metin renginin karisimi, yeni renk uydurulmadi. Pembe
+   baglanti koyu kutuda AA'yi gecmiyor (3.35); oyunun acik pembesi #FFB8D4
+   geciyor (6.02). */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --zemin:   #3A2A4D;
+    --duvar:   #2B1F3A;
+    --beyaz:   #4E3E5D;
+    --ink:     #E9E3EF;
+    --soluk:   #C9C0DA;
+    --baslik:  #FDF6F0;
+    --kontur:  #07060F;
+    --ust:     rgba(58, 42, 77, .92);
+    --baglanti: #FFB8D4;
+  }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,20 +79,20 @@ body {
 
 .kap { width: min(1120px, 92vw); margin: 0 auto; }
 
-a { color: var(--pembe-d); }
+a { color: var(--baglanti); }
 
 /* ── Ust bar ─────────────────────────────────────────────────────────── */
 .ust {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(255, 244, 251, .92);
-  border-bottom: 3px solid var(--lacivert);
+  background: var(--ust);
+  border-bottom: 3px solid var(--kontur);
 }
 .ust .kap { display: flex; align-items: center; gap: 14px; padding: 11px 0; }
-.marka { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--lacivert); }
+.marka { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--baslik); }
 .marka img {
   width: 40px; height: 40px; border-radius: 11px;
-  border: 3px solid var(--lacivert);
-  box-shadow: 3px 3px 0 var(--lacivert);
+  border: 3px solid var(--kontur);
+  box-shadow: 3px 3px 0 var(--kontur);
 }
 .marka b { font-size: 21px; font-weight: 900; letter-spacing: .01em; }
 
@@ -74,10 +104,10 @@ a { color: var(--pembe-d); }
   font-size: 13px; font-weight: 800; text-decoration: none;
   color: var(--soluk); border: 2px solid transparent;
 }
-.diller a:hover { color: var(--lacivert); border-color: var(--duvar); }
+.diller a:hover { color: var(--baslik); border-color: var(--duvar); }
 .diller a[aria-current="page"] {
-  color: var(--lacivert); background: var(--beyaz);
-  border-color: var(--lacivert); box-shadow: 2px 2px 0 var(--lacivert);
+  color: var(--baslik); background: var(--beyaz);
+  border-color: var(--kontur); box-shadow: 2px 2px 0 var(--kontur);
 }
 
 /* ── Kahraman ────────────────────────────────────────────────────────── */
@@ -91,8 +121,8 @@ a { color: var(--pembe-d); }
 .rozet {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--sari); color: var(--lacivert);
-  border: 3px solid var(--lacivert); border-radius: 999px;
-  box-shadow: 3px 3px 0 var(--lacivert);
+  border: 3px solid var(--kontur); border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--kontur);
   padding: 6px 15px; font-weight: 900; font-size: 14px; letter-spacing: .02em;
 }
 .rozet::before {
@@ -103,7 +133,7 @@ a { color: var(--pembe-d); }
 .kahraman h1 {
   margin: 18px 0 14px;
   font-size: clamp(34px, 5.6vw, 54px); line-height: 1.08;
-  font-weight: 900; letter-spacing: -.02em; color: var(--lacivert);
+  font-weight: 900; letter-spacing: -.02em; color: var(--baslik);
 }
 .kahraman h1 em { font-style: normal; color: var(--pembe); }
 .alt { font-size: 18px; color: var(--soluk); max-width: 46ch; }
@@ -111,8 +141,8 @@ a { color: var(--pembe-d); }
 
 .telefon img {
   width: min(300px, 76vw); margin: 0 auto;
-  border-radius: 22px; border: 4px solid var(--lacivert);
-  box-shadow: 8px 8px 0 var(--lacivert);
+  border-radius: 22px; border: 4px solid var(--kontur);
+  box-shadow: 8px 8px 0 var(--kontur);
 }
 
 /* Magaza rozetleri resmi dosyalar, olduklari gibi: kabartma, cerceve ya da
@@ -125,10 +155,10 @@ a { color: var(--pembe-d); }
 
 /* ── Bolumler ───────────────────────────────────────────────────────── */
 section { padding: 54px 0; }
-.duvar-bolum { background: var(--duvar); border-top: 3px solid var(--lacivert); border-bottom: 3px solid var(--lacivert); }
+.duvar-bolum { background: var(--duvar); border-top: 3px solid var(--kontur); border-bottom: 3px solid var(--kontur); }
 h2 {
   font-size: clamp(25px, 3.4vw, 34px); font-weight: 900;
-  color: var(--lacivert); letter-spacing: -.01em; text-align: center;
+  color: var(--baslik); letter-spacing: -.01em; text-align: center;
 }
 .bolum-alt { text-align: center; color: var(--soluk); margin: 10px auto 30px; max-width: 62ch; }
 
@@ -138,11 +168,11 @@ h2 {
 @media (max-width: 520px) { .ozellikler { grid-template-columns: 1fr; } }
 
 .adim, .ozellik {
-  background: var(--beyaz); border: 3px solid var(--lacivert);
+  background: var(--beyaz); border: 3px solid var(--kontur);
   border-radius: var(--r); padding: 22px 20px;
-  box-shadow: 5px 5px 0 var(--lacivert);
+  box-shadow: 5px 5px 0 var(--kontur);
 }
-.adim h3, .ozellik h3 { font-size: 18px; font-weight: 900; color: var(--lacivert); margin-bottom: 6px; }
+.adim h3, .ozellik h3 { font-size: 18px; font-weight: 900; color: var(--baslik); margin-bottom: 6px; }
 .adim p, .ozellik p { color: var(--soluk); font-size: 15.5px; }
 
 /* Bant: oyunun kendi karesi, tam genislikte. Siteye kavanoz cizilmiyor;
@@ -150,8 +180,8 @@ h2 {
 .bant { padding: 0 0 54px; }
 .bant img {
   width: min(1120px, 92vw); margin: 0 auto;
-  border-radius: 20px; border: 4px solid var(--lacivert);
-  box-shadow: 8px 8px 0 var(--lacivert);
+  border-radius: 20px; border: 4px solid var(--kontur);
+  box-shadow: 8px 8px 0 var(--kontur);
 }
 
 /* ── Vitrin ─────────────────────────────────────────────────────────── */
@@ -159,25 +189,25 @@ h2 {
 @media (max-width: 900px) { .vitrin { grid-template-columns: repeat(2, 1fr); } }
 .vitrin figure { text-align: center; }
 .vitrin img {
-  border-radius: 16px; border: 3px solid var(--lacivert);
-  box-shadow: 5px 5px 0 var(--lacivert);
+  border-radius: 16px; border: 3px solid var(--kontur);
+  box-shadow: 5px 5px 0 var(--kontur);
 }
 .vitrin figcaption { margin-top: 10px; font-size: 14px; color: var(--soluk); font-weight: 700; }
 
 /* ── Kapanis ────────────────────────────────────────────────────────── */
 .kapanis { text-align: center; }
 .kapanis .kutu {
-  background: var(--beyaz); border: 4px solid var(--lacivert);
-  border-radius: 24px; box-shadow: 8px 8px 0 var(--lacivert);
+  background: var(--beyaz); border: 4px solid var(--kontur);
+  border-radius: 24px; box-shadow: 8px 8px 0 var(--kontur);
   padding: 38px 26px; max-width: 720px; margin: 0 auto;
 }
 .kapanis .kutu .bolum-alt { margin-bottom: 0; }
 
 /* ── Altbilgi ───────────────────────────────────────────────────────── */
-footer { border-top: 3px solid var(--lacivert); background: var(--duvar); padding: 26px 0 30px; }
+footer { border-top: 3px solid var(--kontur); background: var(--duvar); padding: 26px 0 30px; }
 footer .kap { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
 footer span { color: var(--soluk); font-size: 15px; }
 .f-baglantilar { display: flex; gap: 18px; flex-wrap: wrap; }
-.f-baglantilar a { color: var(--lacivert); font-weight: 800; font-size: 15px; text-decoration: none; }
+.f-baglantilar a { color: var(--baslik); font-weight: 800; font-size: 15px; text-decoration: none; }
 .f-baglantilar a:hover { color: var(--pembe); text-decoration: underline; }
 .f-alt { margin-top: 14px; color: var(--soluk); font-size: 13.5px; justify-content: flex-start; }

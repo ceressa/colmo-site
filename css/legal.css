@@ -8,29 +8,29 @@
 
 .yasal h1 {
   font-size: clamp(28px, 4.4vw, 38px); font-weight: 900;
-  color: var(--lacivert); letter-spacing: -.02em; margin-bottom: 6px;
+  color: var(--baslik); letter-spacing: -.02em; margin-bottom: 6px;
 }
 .yasal .tarih { color: var(--soluk); font-size: 14.5px; font-weight: 700; margin-bottom: 26px; }
 
 .yasal .govde {
-  background: var(--beyaz); border: 3px solid var(--lacivert);
-  border-radius: var(--r); box-shadow: 6px 6px 0 var(--lacivert);
+  background: var(--beyaz); border: 3px solid var(--kontur);
+  border-radius: var(--r); box-shadow: 6px 6px 0 var(--kontur);
   padding: 30px 28px;
 }
 @media (max-width: 560px) { .yasal .govde { padding: 22px 18px; } }
 
 .yasal h2 {
   text-align: left; font-size: 20px; margin: 28px 0 8px;
-  color: var(--lacivert);
+  color: var(--baslik);
 }
 .yasal h2:first-child { margin-top: 0; }
 .yasal p { margin-bottom: 12px; color: var(--ink); }
 .yasal ul { margin: 0 0 14px 20px; }
 .yasal li { margin-bottom: 8px; color: var(--ink); }
-.yasal strong { color: var(--lacivert); }
+.yasal strong { color: var(--baslik); }
 
 .yasal .vurgu {
-  background: var(--duvar); border: 3px solid var(--lacivert);
+  background: var(--duvar); border: 3px solid var(--kontur);
   border-radius: var(--r-s); padding: 16px 18px; margin: 18px 0;
 }
 .yasal .vurgu p:last-child { margin-bottom: 0; }
@@ -38,6 +38,6 @@
 .geri {
   display: inline-flex; align-items: center; gap: 7px;
   margin-bottom: 22px; text-decoration: none; font-weight: 800; font-size: 15px;
-  color: var(--lacivert);
+  color: var(--baslik);
 }
 .geri:hover { color: var(--pembe); }

@@ -239,7 +239,8 @@ def head(code, page, title, desc):
     <meta name="twitter:title" content="%(title)s">
     <meta name="twitter:description" content="%(desc)s">
     <meta name="twitter:image" content="%(site)s/assets/colmo_share.png">
-    <meta name="theme-color" content="#FFF4FB">
+    <meta name="theme-color" content="#FFF4FB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#3A2A4D" media="(prefers-color-scheme: dark)">
     <title>%(title)s</title>
     <link rel="canonical" href="%(site)s/%(path)s">
     %(alts)s
@@ -288,12 +289,12 @@ def footer(code, t):
             <a href="/%(la)s">%(ad)s</a>
         </div>
     </div>
-    <div class="kap f-alt">&copy; 2026 Bardino Technology &middot; %(pkg)s</div>
+    <div class="kap f-alt">&copy; 2026 Bardino Technology</div>
 </footer>
 
 </body>
 </html>
-""" % dict(by=esc(t["by"]), p=esc(p), tm=esc(tm), ad=esc(ad), pkg=PKG,
+""" % dict(by=esc(t["by"]), p=esc(p), tm=esc(tm), ad=esc(ad),
            lp=path_for(code if code in LEGAL_LANGS else "en", "privacy.html"),
            lt=path_for(code if code in LEGAL_LANGS else "en", "terms.html"),
            la=path_for(code if code in LEGAL_LANGS else "en",
