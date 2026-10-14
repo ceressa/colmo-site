@@ -231,3 +231,11 @@ footer { border-top: 3px solid var(--kontur); background: var(--duvar); padding:
 .f-baglantilar { display: flex; gap: 18px; flex-wrap: wrap; }
 .f-baglantilar a { color: var(--baslik); font-weight: 800; font-size: 15px; text-decoration: none; }
 .f-baglantilar a:hover { color: var(--pembe); text-decoration: underline; }
+
+/* Bardino kilidi ve acilis filmi (assets/bardino-intro.js). Nokta ucarken
+   kutunun ustune cikiyor; overflow gorunur olmali. Kontur ve golge rengi
+   --bi-edge'den, yazi currentColor'dan. */
+.bardino-intro { overflow: visible; }
+.bardino-intro .bi-ef { fill: var(--bi-edge, #1B2F4A); }
+.bardino-intro .bi-es { stroke: var(--bi-edge, #1B2F4A); }
+.aile-marka { --bi-edge: var(--kontur); }
