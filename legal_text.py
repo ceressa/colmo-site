@@ -10,11 +10,24 @@ sitesinde ayni). Tanitim sayfalari "sen" kalir.
 
 Her cumle oyunun kodundan dogrulandi (colmo deposu, origin/main 14.10.2026):
   - giris: lib/cloud_sync.dart (anonim kimlik, Google, iOS'ta Apple)
-  - uygulama ici silme: CloudSync.deleteAccount, yalniz bagli hesapta gorunur
-    (lib/ui/menu_pages.dart); onay metni lib/l10n/app_*.arb deleteAccountConfirm
+  - uygulama ici silme: CloudSync.deleteAccount; bagli hesapta "Hesabi sil",
+    sonraki surumde giris yapmamis oyuncuda "Buluttaki kaydi sil"
+    (lib/ui/menu_pages.dart); onay metinleri lib/l10n/app_*.arb
+    deleteAccountConfirm, deleteCloudSaveConfirm
   - satin alma: lib/billing.dart, tek urun com.bardino.colmo.remove_ads,
     docs/LAUNCH.md "remove_ads 1.0.0 ile onaylandi ve canli"
   - Firestore kurallari: firestore.rules (sahibi + salt okuma yonetim hesabi)
+  - buluta giden alanlar: cloudPayload (lib/cloud_sync.dart); takma ad
+    lib/nickname.dart, paylasim metni lib/daily_share.dart, kiler
+    lib/kiler.dart, basarim ve tablolar lib/game_services.dart, olcum
+    olaylari lib/telemetry.dart
+  - Bardino: lib/bardino_api.dart (/acik tokensiz, /durum, /katil, /gunluk,
+    /ad, /hediye-al, /cik) ve lib/bardino.dart (gizlilik kapisi). Merkezin
+    sakladiklari burada tekrarlanmaz; bardino.app/uyelik/aydinlatma'ya
+    baglanir.
+Magazadaki surumde takma ad, gunun kavanozu, kiler, Bardino ve anonim silme
+yok; sonraki surumde var. Bu ozellikler iki surum icin de dogru kalacak
+bicimde, kosullu yazildi ("surumunuzde varsa", "yeni surumlerde").
 Gizlilik metni uygulamadaki `docs/store/PRIVACY_POLICY.md` ile ayni gercegi
 anlatmali. Orasi degisince burasi da degisir.
 """
@@ -53,32 +66,61 @@ PRIVACY_EN = (
     + "<h2>2. What we process</h2>"
     + _ul(
         "<strong>Game progress</strong> (levels cleared, stars, best endless "
-        "score, coins and lives, which helper lessons you have seen): stored "
-        "on your device. If the device is online, the same data is synced to "
-        "Google Firebase under an anonymous identifier that the game creates "
-        "on first launch, so it can be recovered on a new device. No name, "
-        "e-mail or contact detail is part of that record.",
+        "score, coins and lives, which helper lessons you have seen and, in "
+        "versions that have them, daily jar results and streak, how you "
+        "arranged your pantry and jokers received as gifts): stored on your "
+        "device. If the device is online, the same data is synced to Google "
+        "Firebase under an anonymous identifier that the game creates on "
+        "first launch, so it can be recovered on a new device. No e-mail or "
+        "contact detail is part of that record; if your version has a "
+        "nickname, that is the only name in it.",
+        "<strong>Nickname</strong>: if your version of the game shows a "
+        "nickname in Profile, it is a made-up name built from pantry words "
+        "(for example &ldquo;Honeyed Jar 482&rdquo;) that you can change to "
+        "anything you like. It is stored and synced with your game progress, "
+        "so it follows you to a new device. It is never taken from your "
+        "Google or Apple account, it is not shown to other players, and it "
+        "is not sent to analytics or to the ad network. Apart from your save, "
+        "it appears only in reminders on your device, in a daily jar result "
+        "you choose to share, and, if you join Bardino membership, as your "
+        "shared nickname (section 7).",
+        "<strong>Sharing the daily jar</strong>: if you share a daily jar "
+        "result, the game hands a short text to your device's share sheet: "
+        "the date, your stars, the doses you used, your streak, your nickname "
+        "and the game's web address. You choose where it goes; the game sends "
+        "nothing on its own.",
         "<strong>Optional sign-in</strong>: if you choose Sign in with Google "
         "in Settings, or Sign in with Apple on iPhone and iPad, your anonymous "
         "save is linked to that account so it survives a change of device. "
         "We receive only the basic profile the provider gives for "
         "authentication: your e-mail address, or with Apple the relay address "
-        "Apple provides if you choose to hide yours. Signing in is never "
-        "required to play.",
+        "Apple provides if you choose to hide yours. If that account already "
+        "has a Colmo save, your progress is merged into it, and newer "
+        "versions of the game delete the anonymous copy at that moment. "
+        "Signing in is never required to play.",
         "<strong>Purchase</strong>: the only item Colmo sells is "
         "<strong>Remove ads</strong>, a one-time purchase. The App Store or "
         "Google Play processes the payment; we do not receive your payment "
         "details. The game records on the device that ads are removed and "
         "can ask the store to restore the purchase.",
-        "<strong>Settings</strong> (sound, music, language, haptics): stored "
-        "on your device only.",
+        "<strong>Achievements and leaderboards</strong> (Google Play Games on "
+        "Android, Game Center on iPhone and iPad): if you are signed in to "
+        "that service on your device, the game reports the achievements you "
+        "unlock and your scores for two leaderboards, total stars and endless "
+        "mode. Those services show leaderboards to other players under your "
+        "profile there, not under a Colmo nickname.",
+        "<strong>Settings</strong> (sound, music, language, haptics, "
+        "reminders): stored on your device only.",
         "<strong>Gameplay measurement</strong> (Google Analytics for "
         "Firebase): the game records what happened, not who you are. Which "
         "level was started, won, lost or left, how many doses it took, which "
-        "helper was used, whether a language was changed. This exists to "
-        "answer one question: where the game is too hard or unclear. "
-        "Firebase's ad signals are switched off in code, so this measurement "
-        "never feeds an advertising profile.",
+        "helper was used, whether a language was changed and, in versions "
+        "that have them, whether the daily jar was played or shared (never "
+        "what was shared) and the steps of Bardino membership (card seen, "
+        "joined, gift claimed, left). Your e-mail address and nickname are "
+        "never part of it. This exists to answer one question: where the game "
+        "is too hard or unclear. Firebase's ad signals are switched off in "
+        "code, so this measurement never feeds an advertising profile.",
         "<strong>Ads</strong> (Google AdMob): from level 11 onwards the game "
         "shows an occasional full-screen ad between levels, never after a "
         "loss. There is also an ad you may choose to watch to earn one life; "
@@ -94,11 +136,12 @@ PRIVACY_EN = (
     + "<h2>3. What we do not do</h2>"
     + _ul("No banner ads, no ad on the loss screen, and no ad before "
           "level 11.",
-          "No account, no name and no e-mail is ever sent to the ad network.",
+          "No account, no name, no nickname and no e-mail is ever sent to "
+          "the ad network.",
           "No location, no contacts, no photos, no microphone.",
           "We do not sell your data. Apart from the Google services listed "
           "above, the only other company involved is Apple, and only if you "
-          "sign in with Apple or buy on the App Store.")
+          "sign in with Apple, use Game Center or buy on the App Store.")
     + "<h2>4. Where the data lives</h2>"
     + _p("Cloud saves are stored in Google Firebase (Firestore) in the "
          "project <strong>colmo-bardino</strong>. Access rules restrict every "
@@ -107,22 +150,56 @@ PRIVACY_EN = (
          "Firebase's own processing is covered by Google's privacy "
          "documentation.")
     + "<h2>5. Deletion</h2>"
-    + _p("Uninstalling the app removes the data stored on the device. If you "
-         "have signed in, you can delete your account and cloud save in the "
-         "game: <strong>Menu &rarr; Settings &rarr; Delete account</strong>. "
-         "The other routes, and what is kept afterwards, are described on the "
+    + _p("Uninstalling the app removes the data stored on the device; it does "
+         "not delete the cloud save. You can delete the cloud save in the "
+         "game, under <strong>Menu &rarr; Settings</strong>: <strong>Delete "
+         "account</strong> if you have signed in, which also deletes your "
+         "sign-in record, or, in newer versions of the game, <strong>Delete "
+         "cloud save</strong> if you never signed in, which also deletes the "
+         "anonymous identifier the save was kept under. The other routes, and "
+         "what is kept afterwards, are described on the "
          "<a href=\"/account-deletion.html\">Account deletion</a> page.")
     + "<h2>6. Children</h2>"
-    + _p("Colmo contains no chat and no user-generated content. It is not "
-         "directed at children and does not knowingly collect personal data "
-         "from them; the only optional personal data in the product is the "
-         "e-mail address of the Google or Apple account used for sign-in. "
-         "The game does show ads, so it is rated for a general audience "
-         "rather than declared a children's app.")
-    + "<h2>7. Changes</h2>"
+    + _p("Colmo contains no chat, and the game never shows anything a player "
+         "writes to other players. It is not directed at children and does "
+         "not knowingly collect personal data from them; the only optional "
+         "personal data in the product are the e-mail address of the Google "
+         "or Apple account used for sign-in and, in versions that have one, "
+         "a nickname the player chooses to type. Bardino membership is only "
+         "for players aged 13 or over. The game does show ads, so it is rated "
+         "for a general audience rather than declared a children's app.")
+    + "<h2>7. Bardino membership (optional)</h2>"
+    + _p("Colmo, Decimo and Palmo are made by the same developer. Bardino "
+         "membership is a free, optional way to use one account across them: "
+         "one nickname, a daily streak shared by the three games, and small "
+         "gifts. It needs a Google or Apple sign-in and is only for players "
+         "aged 13 or over. What the membership service stores, how long it "
+         "keeps it and how to use your rights are set out in its own "
+         "<a href=\"https://bardino.app/uyelik/aydinlatma#en\">privacy "
+         "notice</a>. If your version of Colmo offers the membership, this is "
+         "what the game itself sends to it:")
+    + _ul("<strong>Before you join</strong>: the game asks whether membership "
+          "is open, without any identity. Only if it is open (or you have "
+          "already joined from this device) and you are signed in with Google "
+          "or Apple does the game also ask whether your account is a member, "
+          "to show the right card; that request carries your sign-in token, "
+          "which includes your e-mail address. Unless you join, nothing about "
+          "you is stored apart from the technical logs described in the "
+          "notice.",
+          "<strong>If you join</strong>: your consent with the 13+ "
+          "confirmation and, for a new membership, your Colmo nickname. After "
+          "that, the date of each daily jar you win, nickname changes and the "
+          "gifts you claim. Gifts arrive in your Colmo save as coins and "
+          "jokers.",
+          "<strong>Leaving</strong>: <strong>Leave Bardino "
+          "membership</strong> in Settings ends the membership in one step, "
+          "for all three games. Signing out of Colmo or deleting your Colmo "
+          "account removes the membership's traces from the device but does "
+          "not end the membership.")
+    + "<h2>8. Changes</h2>"
     + _p("Material changes to this policy will be reflected here with a new "
          "date.")
-    + "<h2>8. Contact</h2>"
+    + "<h2>9. Contact</h2>"
     + _p(_mail()))
 
 PRIVACY_TR = (
@@ -133,33 +210,63 @@ PRIVACY_TR = (
     + "<h2>2. İşlenen veriler</h2>"
     + _ul(
         "<strong>Oyun ilerlemesi</strong> (geçilen bölümler, yıldızlar, "
-        "sonsuz mod rekoru, coin ve canlar, gördüğünüz joker dersleri): "
-        "cihazınızda saklanır. Cihaz çevrimiçiyse aynı veri, yeni bir cihazda "
+        "sonsuz mod rekoru, coin ve canlar, gördüğünüz joker dersleri ve, "
+        "sürümünüzde varsa, günün kavanozu sonuçları ve seriniz, kilerinizi "
+        "nasıl dizdiğiniz ve hediye olarak gelen jokerler): cihazınızda "
+        "saklanır. Cihaz çevrimiçiyse aynı veri, yeni bir cihazda "
         "kurtarılabilmesi için oyunun ilk açılışta oluşturduğu anonim bir "
-        "kimlik altında Google Firebase'e eşitlenir. Bu kayıtta isim, e-posta "
-        "veya iletişim bilgisi bulunmaz.",
+        "kimlik altında Google Firebase'e eşitlenir. Bu kayıtta e-posta veya "
+        "iletişim bilgisi bulunmaz; sürümünüzde takma ad varsa, içindeki tek "
+        "ad odur.",
+        "<strong>Takma ad</strong>: oyununuzun sürümü Profil'de bir takma ad "
+        "gösteriyorsa bu, kiler sözcüklerinden uydurulmuş ve dilediğiniz gibi "
+        "değiştirebileceğiniz bir addır (örneğin &ldquo;Ballı Kavanoz "
+        "482&rdquo;). Yeni bir cihazda da sizinle gelsin diye oyun "
+        "ilerlemesiyle birlikte saklanır ve eşitlenir. Google ya da Apple "
+        "hesabınızdan asla alınmaz, başka oyunculara gösterilmez, ölçüme ve "
+        "reklam ağına gönderilmez. Kaydınız dışında yalnızca cihazınızdaki "
+        "hatırlatmalarda, paylaşmayı seçtiğiniz günün kavanozu sonucunda ve "
+        "Bardino üyeliğine katılırsanız ortak takma adınız olarak (7. bölüm) "
+        "görünür.",
+        "<strong>Günün kavanozunu paylaşma</strong>: günün kavanozu sonucunu "
+        "paylaşırsanız oyun, cihazınızın paylaşım ekranına kısa bir metin "
+        "verir: tarih, yıldızlarınız, harcadığınız doz, seriniz, takma adınız "
+        "ve oyunun web adresi. Nereye gideceğini siz seçersiniz; oyun "
+        "kendiliğinden hiçbir şey göndermez.",
         "<strong>İsteğe bağlı giriş</strong>: Ayarlar'dan Google ile ya da "
         "iPhone ve iPad'de Apple ile giriş yapmayı seçerseniz anonim kaydınız "
         "o hesaba bağlanır ve cihaz değiştirdiğinizde de korunur. Sağlayıcının "
         "kimlik doğrulama için verdiği temel bilgi dışında bir şey almayız: "
         "e-posta adresiniz ya da, Apple'da adresinizi gizlemeyi seçerseniz, "
-        "Apple'ın verdiği aktarma adresi. Oynamak için giriş yapmanız hiçbir "
-        "zaman gerekmez.",
+        "Apple'ın verdiği aktarma adresi. O hesabın zaten bir Colmo kaydı "
+        "varsa ilerlemeniz onunla birleştirilir; oyunun yeni sürümleri anonim "
+        "kopyayı o anda siler. Oynamak için giriş yapmanız hiçbir zaman "
+        "gerekmez.",
         "<strong>Satın alma</strong>: Colmo'da satılan tek ürün, bir kerelik "
         "bir satın alma olan <strong>Reklamları kaldır</strong> seçeneğidir. "
         "Ödemeyi App Store ya da Google Play işler; ödeme bilgileriniz bize "
         "ulaşmaz. Oyun, reklamların kaldırıldığını cihazda kaydeder ve satın "
         "almayı mağazadan geri yükleyebilir.",
-        "<strong>Ayarlar</strong> (ses, müzik, dil, titreşim): yalnızca "
-        "cihazınızda saklanır.",
+        "<strong>Başarımlar ve liderlik tabloları</strong> (Android'de Google "
+        "Play Games, iPhone ve iPad'de Game Center): cihazınızda o hizmete "
+        "giriş yaptıysanız oyun, açtığınız başarımları ve iki liderlik tablosu "
+        "için skorlarınızı (toplam yıldız ve sonsuz mod) bildirir. Bu "
+        "hizmetler liderlik tablolarını diğer oyunculara bir Colmo takma "
+        "adıyla değil, oradaki profilinizle gösterir.",
+        "<strong>Ayarlar</strong> (ses, müzik, dil, titreşim, "
+        "hatırlatmalar): yalnızca cihazınızda saklanır.",
         "<strong>Oynanış ölçümü</strong> (Google Analytics for Firebase): "
         "oyun kim olduğunuzu değil, ne olduğunu kaydeder: hangi bölümün "
         "başlatıldığı, kazanıldığı, kaybedildiği ya da bırakıldığı; kaç doz "
         "harcandığı; hangi jokerin kullanıldığı; dilin değiştirilip "
-        "değiştirilmediği. Bu ölçüm tek bir soruyu yanıtlamak için vardır: "
-        "oyun nerede fazla zor ya da anlaşılmaz. Firebase'in reklam "
-        "sinyalleri kod içinde kapalıdır; bu ölçüm hiçbir zaman bir reklam "
-        "profiline dönüşmez.",
+        "değiştirilmediği ve, sürümünüzde varsa, günün kavanozunun oynanıp "
+        "oynanmadığı ya da paylaşılıp paylaşılmadığı (paylaşılan metin değil) "
+        "ile Bardino üyeliğinin adımları (kartın görülmesi, katılma, hediye "
+        "alma, ayrılma). E-posta adresiniz ve takma adınız bu ölçüme hiçbir "
+        "zaman girmez. Bu ölçüm tek bir soruyu yanıtlamak için vardır: oyun "
+        "nerede fazla zor ya da anlaşılmaz. Firebase'in reklam sinyalleri kod "
+        "içinde kapalıdır; bu ölçüm hiçbir zaman bir reklam profiline "
+        "dönüşmez.",
         "<strong>Reklamlar</strong> (Google AdMob): 11. bölümden itibaren "
         "bölüm aralarında ara sıra tam ekran reklam gösterilir; kaybedilen "
         "bir bölümün ardından asla gösterilmez. Ayrıca, izlemeyi kendiniz "
@@ -175,11 +282,12 @@ PRIVACY_TR = (
     + "<h2>3. Yapmadıklarımız</h2>"
     + _ul("Banner reklam yok, kaybedilen bölümün ardından reklam yok, 11. "
           "bölümden önce reklam yok.",
-          "Reklam ağına hesap, isim veya e-posta gönderilmez.",
+          "Reklam ağına hesap, isim, takma ad veya e-posta gönderilmez.",
           "Konum, rehber, fotoğraf ve mikrofon kullanılmaz.",
           "Verinizi satmıyoruz. Yukarıda sayılan Google hizmetleri dışında "
           "işin içinde olan tek şirket Apple'dır; o da yalnızca Apple ile "
-          "giriş yaparsanız ya da App Store'dan satın alırsanız.")
+          "giriş yaparsanız, Game Center kullanırsanız ya da App Store'dan "
+          "satın alırsanız.")
     + "<h2>4. Verinin tutulduğu yer</h2>"
     + _p("Bulut kayıtları Google Firebase (Firestore) üzerinde "
          "<strong>colmo-bardino</strong> projesinde tutulur. Erişim "
@@ -188,23 +296,56 @@ PRIVACY_TR = (
          "okuma erişimidir. Firebase'in kendi işleme süreçleri Google'ın "
          "gizlilik belgelerine tabidir.")
     + "<h2>5. Silme</h2>"
-    + _p("Uygulamayı kaldırmak cihazda saklanan veriyi siler. Giriş "
-         "yaptıysanız hesabınızı ve bulut kaydınızı oyunun içinden "
-         "silebilirsiniz: <strong>Menü &rarr; Ayarlar &rarr; Hesabı "
-         "sil</strong>. Diğer yollar ve sonrasında neyin kaldığı "
+    + _p("Uygulamayı kaldırmak cihazda saklanan veriyi siler; bulut kaydını "
+         "silmez. Bulut kaydınızı oyunun içinden, <strong>Menü &rarr; "
+         "Ayarlar</strong> altında silebilirsiniz: giriş yaptıysanız "
+         "<strong>Hesabı sil</strong> ile (giriş kaydınız da silinir), hiç "
+         "giriş yapmadıysanız oyunun yeni sürümlerinde <strong>Buluttaki "
+         "kaydı sil</strong> ile (kaydın tutulduğu anonim kimlik de silinir). "
+         "Diğer yollar ve sonrasında neyin kaldığı "
          "<a href=\"/tr/account-deletion.html\">Hesap silme</a> sayfasında "
          "anlatılır.")
     + "<h2>6. Çocuklar</h2>"
-    + _p("Colmo'da sohbet ve kullanıcı içeriği yoktur. Uygulama çocuklara "
-         "yönelik değildir ve çocuklardan bilerek kişisel veri toplamaz; "
-         "üründeki tek isteğe bağlı kişisel veri, giriş için kullanılan "
-         "Google ya da Apple hesabının e-posta adresidir. Oyunda reklam "
-         "gösterildiği için genel kitleye uygun olarak "
-         "derecelendirilmiştir, çocuk uygulaması olarak beyan edilmemiştir.")
-    + "<h2>7. Değişiklikler</h2>"
+    + _p("Colmo'da sohbet yoktur ve oyun, bir oyuncunun yazdığı hiçbir şeyi "
+         "başka oyunculara göstermez. Uygulama çocuklara yönelik değildir ve "
+         "çocuklardan bilerek kişisel veri toplamaz; üründeki isteğe bağlı "
+         "kişisel veriler, giriş için kullanılan Google ya da Apple hesabının "
+         "e-posta adresi ve, sürümünüzde varsa, oyuncunun kendi yazmayı "
+         "seçtiği takma addır. Bardino üyeliği yalnızca 13 yaş ve "
+         "üstündekiler içindir. Oyunda reklam gösterildiği için genel kitleye "
+         "uygun olarak derecelendirilmiştir, çocuk uygulaması olarak beyan "
+         "edilmemiştir.")
+    + "<h2>7. Bardino üyeliği (isteğe bağlı)</h2>"
+    + _p("Colmo, Decimo ve Palmo aynı geliştiricinin oyunlarıdır. Bardino "
+         "üyeliği, üçünde tek hesap kullanmanın ücretsiz ve isteğe bağlı "
+         "yoludur: tek takma ad, üç oyunun ortak günlük serisi ve küçük "
+         "hediyeler. Google ya da Apple girişi gerektirir ve yalnızca 13 yaş "
+         "ve üstündekiler içindir. Üyelik hizmetinin neyi sakladığı, ne kadar "
+         "süre tuttuğu ve haklarınızı nasıl kullanabileceğiniz kendi "
+         "<a href=\"https://bardino.app/uyelik/aydinlatma\">aydınlatma "
+         "metninde</a> yazılıdır. Colmo sürümünüz üyeliği sunuyorsa oyunun "
+         "kendisinin bu hizmete gönderdikleri şunlardır:")
+    + _ul("<strong>Katılmadan önce</strong>: oyun, üyeliğin açık olup "
+          "olmadığını hiçbir kimlik eklemeden sorar. Yalnızca üyelik açıksa "
+          "(ya da bu cihazdan zaten katıldıysanız) ve Google ya da Apple ile "
+          "giriş yaptıysanız, doğru kartı gösterebilmek için hesabınızın üye "
+          "olup olmadığını da sorar; bu istek, e-posta adresinizi içeren "
+          "giriş jetonunu taşır. Katılmadığınız sürece, aydınlatma metninde "
+          "anlatılan teknik kayıtlar dışında sizinle ilgili hiçbir şey "
+          "saklanmaz.",
+          "<strong>Katılırsanız</strong>: onayınız ve 13 yaş beyanınız, yeni "
+          "bir üyelikte ise Colmo takma adınız. Sonrasında kazandığınız her "
+          "günün kavanozunun tarihi, takma ad değişiklikleriniz ve aldığınız "
+          "hediyeler. Hediyeler Colmo kaydınıza coin ve joker olarak gelir.",
+          "<strong>Ayrılma</strong>: Ayarlar'daki <strong>Bardino "
+          "üyeliğinden çık</strong> satırı üyeliği tek adımda, üç oyun için "
+          "birden sonlandırır. Colmo'dan çıkış yapmak ya da Colmo hesabınızı "
+          "silmek üyeliğin cihazdaki izlerini siler, ama üyeliği "
+          "sonlandırmaz.")
+    + "<h2>8. Değişiklikler</h2>"
     + _p("Bu politikadaki önemli değişiklikler yeni bir tarihle burada "
          "yayımlanır.")
-    + "<h2>8. İletişim</h2>"
+    + "<h2>9. İletişim</h2>"
     + _p(_mail()))
 
 TERMS_EN = (
@@ -336,12 +477,20 @@ DELETE_EN = (
          "under a new anonymous identifier, as it does for every player who "
          "has not signed in.")
     + "<h2>2. If you never signed in</h2>"
-    + _p("The <strong>Delete account</strong> option appears only after you "
-         "sign in. A save that was never linked is held under the anonymous "
-         "identifier alone and contains no e-mail address, so we cannot "
-         "locate it from a message. You can sign in with Google, or with "
-         "Apple on iPhone and iPad, and then delete the account as in "
-         "step 1.")
+    + _p("Newer versions of the game show a delete option to players who "
+         "never signed in as well:")
+    + _ol("Open <strong>Menu</strong> &rarr; <strong>Settings</strong>.",
+          "Tap <strong>Delete cloud save</strong>.",
+          "The confirmation reads <em>Your cloud save and its anonymous ID "
+          "are deleted. Progress on this device stays; if you keep playing, "
+          "it is backed up again under a new ID.</em> Tap <strong>Delete "
+          "cloud save</strong> again to confirm.")
+    + _p("The game deletes your cloud save and then the anonymous identifier "
+         "it was kept under. If your version does not show this option, you "
+         "can sign in with Google, or with Apple on iPhone and iPad, and then "
+         "delete the account as in step 1. A save that was never linked "
+         "contains no e-mail address, so we cannot locate it from a "
+         "message.")
     + "<h2>3. Reset progress on this device</h2>"
     + _ol("Open <strong>Menu</strong> &rarr; <strong>Settings</strong>.",
           "Tap <strong>Reset progress</strong>.",
@@ -350,7 +499,7 @@ DELETE_EN = (
           "progress</strong> again to confirm.")
     + _p("This erases levels, stars, records and coins on the device and "
          "keeps your sound and language settings. It is not a way to delete "
-         "your cloud save; use step 1 for that.")
+         "your cloud save; use step 1 or 2 for that.")
     + "<h2>4. By e-mail</h2>"
     + _p("If you can no longer open the game, for example because you no "
          "longer have the device, write to %s with the subject "
@@ -363,11 +512,17 @@ DELETE_EN = (
     + "<h2>What is deleted</h2>"
     + _p("Your cloud save, with everything listed under Game progress in the "
          "<a href=\"/privacy.html\">privacy policy</a>, and the sign-in "
-         "record that links it to your Google or Apple account. No backup "
+         "record that links it to your Google or Apple account, or for a "
+         "save that was never linked, the anonymous identifier. No backup "
          "copy is kept.")
     + "<h2>What is not deleted</h2>"
     + _ul("<strong>Progress on this device</strong>: it stays until you reset "
           "it (step 3) or uninstall the app.",
+          "<strong>Bardino membership</strong>, if you joined it: it is "
+          "ended separately with <strong>Leave Bardino membership</strong> "
+          "in Settings, as described in its "
+          "<a href=\"https://bardino.app/uyelik/aydinlatma#en\">privacy "
+          "notice</a>.",
           "<strong>The Remove ads purchase</strong>: it belongs to your App "
           "Store or Google Play account, not to your Colmo account. Deleting "
           "the account does not cancel it, and <strong>Restore "
@@ -380,9 +535,9 @@ DELETE_EN = (
           "well.")
     + "<h2>Uninstalling</h2>"
     + _p("Uninstalling removes everything stored on the device, including the "
-         "anonymous identifier. It does not delete the cloud save. If you "
-         "have signed in, delete the account first (step 1). If you have "
-         "not, the save remains on our servers without any e-mail address, "
+         "anonymous identifier. It does not delete the cloud save, so delete "
+         "it first: step 1 if you have signed in, step 2 if you have not. A "
+         "save left behind stays on our servers without any e-mail address, "
          "and afterwards neither the app nor we can match it to you.")
     + "<h2>Contact</h2>"
     + _p("%s &middot; %s" % (_mail(), PKG)))
@@ -409,12 +564,19 @@ DELETE_TR = (
          "istenir. Bu cihazdaki ilerlemeniz korunur ve oyun, giriş yapmamış "
          "her oyuncuda olduğu gibi yeni bir anonim kimlikle devam eder.")
     + "<h2>2. Hiç giriş yapmadıysanız</h2>"
-    + _p("<strong>Hesabı sil</strong> seçeneği yalnızca giriş yaptıktan sonra "
-         "görünür. Hiçbir hesaba bağlanmamış bir kayıt yalnızca anonim kimlik "
-         "altında tutulur ve e-posta adresi içermez; bu nedenle onu bir "
-         "e-postadan bulamayız. Ayarlar'dan Google ile ya da iPhone ve "
-         "iPad'de Apple ile giriş yapıp ardından 1. adımdaki gibi hesabı "
-         "silebilirsiniz.")
+    + _p("Oyunun yeni sürümleri, hiç giriş yapmamış oyunculara da bir silme "
+         "seçeneği gösterir:")
+    + _ol("<strong>Menü</strong> &rarr; <strong>Ayarlar</strong>'ı açın.",
+          "<strong>Buluttaki kaydı sil</strong> satırına dokunun.",
+          "Onay penceresinde şu yazar: <em>Buluttaki kaydın ve anonim "
+          "kimliğin silinir. Bu cihazdaki ilerleme kalır; oynamaya devam "
+          "edersen yeni bir kimlikle yeniden yedeklenir.</em> Onaylamak için "
+          "yeniden <strong>Buluttaki kaydı sil</strong>'e dokunun.")
+    + _p("Oyun önce bulut kaydınızı, ardından onun tutulduğu anonim kimliği "
+         "siler. Sürümünüz bu seçeneği göstermiyorsa Ayarlar'dan Google ile "
+         "ya da iPhone ve iPad'de Apple ile giriş yapıp ardından 1. adımdaki "
+         "gibi hesabı silebilirsiniz. Hiçbir hesaba bağlanmamış bir kayıt "
+         "e-posta adresi içermez; bu nedenle onu bir e-postadan bulamayız.")
     + "<h2>3. Bu cihazdaki ilerlemeyi sıfırlayın</h2>"
     + _ol("<strong>Menü</strong> &rarr; <strong>Ayarlar</strong>'ı açın.",
           "<strong>İlerlemeyi sıfırla</strong> satırına dokunun.",
@@ -423,7 +585,7 @@ DELETE_TR = (
           "<strong>İlerlemeyi sıfırla</strong>'ya dokunun.")
     + _p("Bu işlem cihazdaki bölümleri, yıldızları, rekorları ve coinleri "
          "siler; ses ve dil ayarlarınız kalır. Bulut kaydınızı silmenin yolu "
-         "bu değildir; bunun için 1. adımı kullanın.")
+         "bu değildir; bunun için 1. ya da 2. adımı kullanın.")
     + "<h2>4. E-postayla</h2>"
     + _p("Oyunu artık açamıyorsanız, örneğin cihaz artık elinizde değilse, "
          "bağladığınız Google ya da Apple hesabının e-posta adresinden %s "
@@ -434,11 +596,17 @@ DELETE_TR = (
     + "<h2>Neler silinir</h2>"
     + _p("Bulut kaydınız (<a href=\"/tr/privacy.html\">gizlilik "
          "politikasında</a> Oyun ilerlemesi başlığı altında sayılan her şey) "
-         "ve onu Google ya da Apple hesabınıza bağlayan giriş kaydı. "
-         "Sonrasında yedek bir kopya tutulmaz.")
+         "ve onu Google ya da Apple hesabınıza bağlayan giriş kaydı; hiçbir "
+         "hesaba bağlanmamış bir kayıtta ise anonim kimlik. Sonrasında yedek "
+         "bir kopya tutulmaz.")
     + "<h2>Neler silinmez</h2>"
     + _ul("<strong>Bu cihazdaki ilerleme</strong>: siz sıfırlayana (3. adım) "
           "ya da uygulamayı kaldırana kadar kalır.",
+          "<strong>Bardino üyeliği</strong>, katıldıysanız: Ayarlar'daki "
+          "<strong>Bardino üyeliğinden çık</strong> satırıyla ayrıca "
+          "sonlandırılır; ayrıntılar "
+          "<a href=\"https://bardino.app/uyelik/aydinlatma\">aydınlatma "
+          "metnindedir</a>.",
           "<strong>Reklamları kaldır satın alması</strong>: Colmo hesabınıza "
           "değil, App Store ya da Google Play hesabınıza aittir. Hesabı "
           "silmek satın almayı iptal etmez; Ayarlar'daki <strong>Satın "
@@ -451,10 +619,10 @@ DELETE_TR = (
           "kalır.")
     + "<h2>Uygulamayı kaldırmak</h2>"
     + _p("Uygulamayı kaldırmak, anonim kimlik dahil cihazda saklanan her şeyi "
-         "siler; bulut kaydını silmez. Giriş yaptıysanız önce hesabı silin "
-         "(1. adım). Giriş yapmadıysanız kayıt, hiçbir e-posta adresi "
-         "olmadan sunucularımızda kalır ve sonrasında ne uygulama ne de biz "
-         "onu sizinle eşleştirebiliriz.")
+         "siler; bulut kaydını silmez. Bu yüzden önce onu silin: giriş "
+         "yaptıysanız 1. adım, yapmadıysanız 2. adım. Geride kalan bir kayıt, "
+         "hiçbir e-posta adresi olmadan sunucularımızda kalır ve sonrasında "
+         "ne uygulama ne de biz onu sizinle eşleştirebiliriz.")
     + "<h2>İletişim</h2>"
     + _p("%s &middot; %s" % (_mail(), PKG)))
 
@@ -462,7 +630,9 @@ DELETE_TR = (
 # (dosya, baslik, meta aciklama, tarih, govde). Meta aciklama sayfa basina:
 # eskiden dort sayfa da acilis sayfasinin oyun tanitimini tasiyordu. Tarih
 # metnin ozu degistiginde degisir; 14.10.2026'da uc metin de degisti (satin
-# alma, Apple girisi, uygulama ici silme, yonetim hesabinin okuma erisimi).
+# alma, Apple girisi, uygulama ici silme, yonetim hesabinin okuma erisimi),
+# ayni gun gizlilik ve silme metni bir kez daha (takma ad, paylasim, kiler,
+# Bardino uyeligi, Play Games ve Game Center, anonim silme).
 _PAGES = {
     "en": [
         ("privacy.html", "Privacy policy",
