@@ -67,7 +67,7 @@ T["en"] = {
     "endS": "Free on the App Store and Google Play.",
     "stores": ("Colmo on the App Store", "Colmo on Google Play"),
     "legal": ("Privacy", "Terms of use", "Account deletion"),
-    "lead": "Colmo is made by Bardino, a small independent studio. If you like it, meet its two siblings:",
+    "aile_lead": "Colmo is made by Bardino, a small independent studio. If you like it, meet its two siblings:",
     "back": "Back to Colmo",
 }
 
@@ -91,7 +91,7 @@ T["tr"] = {
     "endS": "App Store ve Google Play'de ücretsiz.",
     "stores": ("App Store'da Colmo", "Google Play'de Colmo"),
     "legal": ("Gizlilik", "Kullanım koşulları", "Hesap silme"),
-    "lead": "Colmo'yu Bardino yapıyor, küçük ve bağımsız bir stüdyo. Sevdiysen iki kardeşiyle de tanış:",
+    "aile_lead": "Colmo'yu Bardino yapıyor, küçük ve bağımsız bir stüdyo. Sevdiysen iki kardeşiyle de tanış:",
     "back": "Colmo'ya dön",
 }
 
@@ -115,7 +115,7 @@ T["de"] = {
     "endS": "Kostenlos im App Store und bei Google Play.",
     "stores": ("Colmo im App Store", "Colmo bei Google Play"),
     "legal": ("Datenschutz", "Nutzungsbedingungen", "Konto löschen"),
-    "lead": "Colmo kommt von Bardino, einem kleinen unabhängigen Studio. Wenn es dir gefällt, lern seine zwei Geschwister kennen:",
+    "aile_lead": "Colmo kommt von Bardino, einem kleinen unabhängigen Studio. Wenn es dir gefällt, lern seine zwei Geschwister kennen:",
     "back": "Zurück zu Colmo",
 }
 
@@ -140,7 +140,7 @@ T["fr"] = {
     "stores": ("Colmo sur l'App Store", "Colmo sur Google Play"),
     "legal": ("Confidentialité", "Conditions d'utilisation",
               "Suppression du compte"),
-    "lead": "Colmo est créé par Bardino, un petit studio indépendant. Si tu l'aimes, découvre les deux autres :",
+    "aile_lead": "Colmo est créé par Bardino, un petit studio indépendant. Si tu l'aimes, découvre les deux autres :",
     "back": "Retour à Colmo",
 }
 
@@ -164,7 +164,7 @@ T["es"] = {
     "endS": "Gratis en el App Store y Google Play.",
     "stores": ("Colmo en el App Store", "Colmo en Google Play"),
     "legal": ("Privacidad", "Términos de uso", "Eliminar cuenta"),
-    "lead": "Colmo lo hace Bardino, un pequeño estudio independiente. Si te gusta, conoce a sus dos hermanos:",
+    "aile_lead": "Colmo lo hace Bardino, un pequeño estudio independiente. Si te gusta, conoce a sus dos hermanos:",
     "back": "Volver a Colmo",
 }
 
@@ -188,7 +188,7 @@ T["pt"] = {
     "endS": "Grátis na App Store e no Google Play.",
     "stores": ("Colmo na App Store", "Colmo no Google Play"),
     "legal": ("Privacidade", "Termos de uso", "Excluir conta"),
-    "lead": "Colmo é feito pela Bardino, um pequeno estúdio independente. Se você gostar, conheça os outros dois:",
+    "aile_lead": "Colmo é feito pela Bardino, um pequeno estúdio independente. Se você gostar, conheça os outros dois:",
     "back": "Voltar ao Colmo",
 }
 
@@ -343,7 +343,7 @@ def aile(code, t, kardesler):
         </div>
     </div>
 """ % dict(studyo="https://bardino.app/tr/" if code == "tr" else "https://bardino.app/",
-           logo=BARDINO_LOGO, lead=esc(t["lead"]), kart=kart)
+           logo=BARDINO_LOGO, lead=esc(t["aile_lead"]), kart=kart)
 
 
 
