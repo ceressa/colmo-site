@@ -480,9 +480,9 @@ KARDES_TAG = {
               "fr": "Remplis les bocaux à ras bord",
               "es": "Llena los tarros hasta el borde",
               "pt": "Encha os potes até a borda"},
-    "palmo": {"en": "Weave the whole board", "tr": "Bütün tahtayı doku",
-              "de": "Webe das ganze Brett", "fr": "Tisse tout le plateau",
-              "es": "Teje todo el tablero", "pt": "Teça o tabuleiro inteiro"},
+    "palmo": {"en": "Number Weave", "tr": "Sayı Dokuma",
+              "de": "Zahlen-Gewebe", "fr": "Nombres tissés",
+              "es": "Tejido numérico", "pt": "Trama numérica"},
 }
 KARDES_AD = {"decimo": "Decimo", "colmo": "Colmo", "palmo": "Palmo"}
 
